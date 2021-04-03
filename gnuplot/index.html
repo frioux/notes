@@ -1,0 +1,83 @@
+<html>
+  <head>
+    <title>Gnuplot - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="Gnuplot" />
+    <meta name="twitter:title" content="Gnuplot" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>Gnuplot</h1>
+<ul>
+<li><a href="http://gnuplot.info/docs_5.2/Gnuplot_5.2.pdf">Official Docs</a></li>
+</ul>
+<h2 id="example-date-graph">Example Date Graph</h2>
+<pre><code class="language-gnuplot">#!/usr/bin/gnuplot
+
+reset
+set terminal png
+
+set xdata time
+set timefmt &quot;%s&quot;
+set format x &quot;%M&quot;
+
+set xlabel &quot;Time&quot;
+set ylabel &quot;Megs remaining&quot;
+
+set title &quot;Backlog&quot;
+set key below
+set grid
+
+plot &quot;./short.csv&quot; using 1:2 title &quot;megs&quot;
+</code></pre>
+<p>A subset of the original <code>short.csv</code> follows:</p>
+<pre><code>1518801163	3574.50829
+1518801174	3574.52045
+1518801186	3572.37893
+1518801197	3572.49771
+1518801208	3572.72096
+1518801220	3574.72910
+1518801231	3574.94450
+1518801243	3575.35381
+1518801254	3575.91569
+1518801266	3576.51369
+1518801277	3577.17051
+1518801289	3577.81990
+1518801300	3578.39525
+1518801312	3579.06250
+1518801324	3579.74749
+1518801340	3580.12999
+1518801352	3580.42591
+1518801364	3580.68124
+1518801375	3580.75379
+1518801420	3581.06895
+</code></pre>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/oss">oss</a></li>
+<li><a href="/notes/tags/reference">reference</a></li>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>

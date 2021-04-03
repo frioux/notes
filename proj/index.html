@@ -1,0 +1,104 @@
+<html>
+  <head>
+    <title>proj - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="proj" />
+    <meta name="twitter:title" content="proj" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>proj</h1>
+<h2 id="goals">Goals</h2>
+<ul>
+<li>Integrate vim sesssions, notes, and directories</li>
+<li>Trivial Initialization</li>
+<li>Support monorepo + multiple work trees + branches</li>
+</ul>
+<h2 id="foundations">Foundations</h2>
+<ul>
+<li>smartcd</li>
+<li>notes system</li>
+<li>little vim plugins + vim8 optional loading</li>
+</ul>
+<h2 id="sketch">Sketch</h2>
+<ul>
+<li>Support worktrees by allowing symlinks in smartcd scripts dir</li>
+</ul>
+<pre><code>proj init &lt;proj&gt; -&gt; create project called &lt;proj&gt; for current dir, creating vim session and note.
+                    if either vim session or note already exist, fail with error
+                    --skip-vim or --skip-note do not attempt to create those
+                    --force-vim or --force-note will overwrite those
+
+proj vim -&gt; open vim session
+proj gvim -&gt; open vim session in new terminal (todo)
+proj note -&gt; open note (maybe just render it?) (todo)
+proj enote -&gt; open note in existing notes session (todo)
+</code></pre>
+<h2 id="plan">Plan</h2>
+<ul>
+<li>add proj index
+<ul>
+<li>from name to path</li>
+<li>worktrees? (multiple path options, one correct?)</li>
+<li>branches? (only whichever work tree has a branch checked out?)</li>
+</ul>
+</li>
+<li>add proj support to notes.vim
+<ul>
+<li>open vim for project <code>:Session</code></li>
+<li><code>:Tmux</code> window for project</li>
+</ul>
+</li>
+<li>create proj.vim
+<ul>
+<li>show <code>:Note</code> from within project</li>
+<li>open <code>:Tmux</code></li>
+</ul>
+</li>
+<li>move smartcd config to dropbox</li>
+</ul>
+<h2 id="ideas">Ideas</h2>
+<ul>
+<li>allow locking a project to a branch? (<code>proj unlock-branch</code>, <code>proj lock-branch</code>, implemented as part of proj.vim?)
+<ul>
+<li>maybe to a given worktree</li>
+</ul>
+</li>
+<li>cd $(proj dir proj)</li>
+<li>per project shell history</li>
+<li><code>proj tabs</code> to load firefox tabs from some urls on the note?</li>
+<li>vim sessions mapped to branch, vs project, to allow more fluid switching?</li>
+<li>automatically link to any existing superproject (ie stuff in the zr monorepo should link to a zr project)</li>
+</ul>
+<h2 id="inspiration">Inspiration</h2>
+<ul>
+<li><a href="https://octodon.social/@mjog/103161761659966257">Michael J. Gratton: &quot;The per-project and per-organisation .localrc fil…&quot; - Octodon</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/project">project</a></li>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>

@@ -1,0 +1,493 @@
+<html>
+  <head>
+    <title>OSS CV - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="OSS CV" />
+    <meta name="twitter:title" content="OSS CV" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>OSS CV</h1>
+<!-- review with bin/check-oss-cv -->
+<p>This very much a work-in-progress; it is planned to be a list of all the Open
+Source I've written.</p>
+<h2 id="cpan">CPAN</h2>
+<p>The following Perl modules are officially released code with generally good test
+coverage and unit level documentation.  Many of it is used in production.  Items
+in bold are the ones I think are the most important.</p>
+<ul>
+<li><a href="https://metacpan.org/pod/Apache::BalancerManager">Apache::BalancerManager</a>:
+Allows programmatically interacting with Apache's Load Balancer.</li>
+<li><a href="https://metacpan.org/pod/App::Adenosine">App::Adenosine</a>: CLI tool for
+working with RESTful interfaces</li>
+<li><a href="https://metacpan.org/pod/App::Charon">App::Charon</a>: CLI tool to share local
+files over HTTP</li>
+<li><a href="https://metacpan.org/pod/Catalyst::TraitFor::Controller::DBIC::DoesPaging">Catalyst::TraitFor::Controller::DBIC::DoesPaging</a>:
+Catalyst integration for paging with DBIC.</li>
+<li><a href="https://metacpan.org/pod/Catalyst::TraitFor::Controller::DoesExtPaging">Catalyst::TraitFor::Controller::DoesExtPaging</a>:
+Catalyst integration for paging to ExtJS.</li>
+<li><a href="https://metacpan.org/pod/Catalyst::ActionRole::DetachOnDie">Catalyst::ActionRole::DetachOnDie</a>:
+Module to correctly abort the rest of a request when an exception is
+thrown.</li>
+<li><a href="https://metacpan.org/pod/Catalyst::ActionRole::PseudoCache">Catalyst::ActionRole::PseudoCache</a>:
+Silly little role to memoize an action.</li>
+<li><a href="https://metacpan.org/pod/CGI::Application::Plugin::DBH">CGI::Application::Plugin::DBH</a>: Integrates database handles with CGI::Application.</li>
+<li><a href="https://metacpan.org/pod/CGI::Application::Plugin::DBIx::Class">CGI::Application::Plugin::DBIx::Class</a>:
+Integrates a DBIx::Class Schema with CGI::Application.</li>
+<li><a href="https://metacpan.org/pod/CGI::Application::Plugin::ExtJS">CGI::Application::Plugin::ExtJS</a>: Integrates DBIx::Class, CGI::Application, and ExtJS.</li>
+<li><strong><a href="https://metacpan.org/pod/Catalyst::Action::FromPSGI">Catalyst::Action::FromPSGI</a>:
+Exposes an endpoint within Catalyst that runs a PSGI application.</strong></li>
+<li><strong><a href="https://metacpan.org/pod/Catalyst::Controller::Accessors">Catalyst::Controller::Accessors</a>:
+Hides access to the stash behind accessors.</strong></li>
+<li><a href="https://metacpan.org/pod/Code::Crypt">Code::Crypt</a>: DRM for your code.</li>
+<li><a href="https://metacpan.org/pod/Cogit">Cogit</a>: A fork of Git::PurePerl, intended to
+be pure Perl including deps, and with a simpler interface.</li>
+<li><a href="https://metacpan.org/pod/Config::Station">Config::Station</a>: 12-Factor config
+system.</li>
+<li><a href="https://metacpan.org/pod/Config::ZOMG">Config::ZOMG</a>: Faster replacement
+for Config::JFDI.</li>
+<li><a href="https://metacpan.org/pod/DBIx::Class::Candy">DBIx::Class::Candy</a>: Sugar
+interface for defining DBIx::Class results.</li>
+<li><strong><a href="https://metacpan.org/pod/DBIx::Class::DeploymentHandler">DBIx::Class::DeploymentHandler</a>:
+Flexible database schema management tool.</strong></li>
+<li><strong><a href="https://metacpan.org/pod/DBIx::Class::Helpers">DBIx::Class::Helpers</a>: A pile
+of addons for DBIx::Class results and resultsets.  Functionality varies
+from simple shortcuts to entirely new abstractions that allow more cross
+engine portability.</strong></li>
+<li><a href="https://metacpan.org/pod/DBIx::Class::MaterializedPath">DBIx::Class::MaterializedPath</a>:
+Materialized Path implementation for storing trees in tables with
+DBIx::Class.</li>
+<li><a href="https://metacpan.org/pod/DBIx::Class::QueryLog::Conditional">DBIx::Class::QueryLog::Conditional</a>:
+Conditionally log queries run by DBIx::Class.</li>
+<li><a href="https://metacpan.org/pod/DBIx::Class::QueryLog::Tee">DBIx::Class::QueryLog::Tee</a>:
+Log queries run by DBIx::Class to multiple places.</li>
+<li><a href="https://metacpan.org/pod/DBIx::Class::UnicornLogger">DBIx::Class::UnicornLogger</a>:
+Powerful, flexible query logger featuring features like stacktraces and
+color coding.</li>
+<li><a href="https://metacpan.org/pod/DBIx::Introspector">DBIx::Introspector</a>: A tool for
+introspecting a database connection.</li>
+<li><a href="https://metacpan.org/pod/Digest::MurmurHash2::Neutral">Digest::MurmurHash2::Neutral</a>:
+Murmer2 implementation that matches that of nginx.</li>
+<li><a href="https://metacpan.org/pod/DateTime::Format::MSSQL">DateTime::Format::MSSQL</a>:
+DateTime::Format module for SQL Server's ISO8601 dialect.</li>
+<li><a href="https://metacpan.org/pod/Email::MIME::Kit::Renderer::Xslate">Email::MIME::Kit::Renderer::Xslate</a>:
+Integration for rendering Xslate in Email::MIME::Kit.</li>
+<li><a href="https://metacpan.org/pod/Git::Validate">Git::Validate</a>: Module for
+validating git commits.</li>
+<li><a href="https://metacpan.org/pod/Harbinger::Client">Harbinger::Client</a>: Client for
+an in house stats framework.</li>
+<li><a href="https://metacpan.org/pod/JavaScript::Dependency::Manager">JavaScript::Dependency::Manager</a>:
+Module for building Javascript files into single files.</li>
+<li><a href="https://metacpan.org/pod/Log::Contextual">Log::Contextual</a>: Logging
+metatool, specifically engineered for a lightweight interface and flexible
+logging.</li>
+<li><a href="https://metacpan.org/pod/Log::Sprintf">Log::Sprintf</a>: A reimagining of
+Log4perl's log specs.</li>
+<li><a href="https://metacpan.org/pod/Log::Structured">Log::Structured</a>: Meant to be
+integrated with Log::Sprintf, allows logging structures instead of strings
+and rendering them at read time.</li>
+<li><a href="https://metacpan.org/pod/Net::Async::EmptyPort">Net::Async::EmptyPort</a>:
+Integration to add empty port capabilities back into networked IO::Async
+programs.</li>
+<li><a href="https://metacpan.org/pod/Net::Async::Ping">Net::Async::Ping</a>: Multiple
+implementation of ping (ICMP, TCP, etc) built asyncronously.</li>
+<li><a href="https://metacpan.org/pod/Plack::App::File::CaseInsensitive">Plack::App::File::CaseInsensitive</a>:
+A transitional file server that finds files ignoring case, even on case
+sensitive file-systems.</li>
+<li><a href="https://metacpan.org/pod/Plack::Middleware::Acme::PHPE9568F34::D428::11d2::A769::00AA001ACF42">Plack::Middleware::Acme::PHPE9568F34::D428::11d2::A769::00AA001ACF42</a>:
+This module adds <a href="http://phpsadness.com/?page=sad/11">one of PHP's best
+features</a> to Perl.</li>
+<li><a href="https://metacpan.org/pod/Plack::Middleware::ProcessTimes">Plack::Middleware::ProcessTimes</a>:
+Exposes <code>times(2)</code> data incurred by each request of a web server.</li>
+<li><a href="https://metacpan.org/pod/Pod::Weaver::Plugin::Ditaa">Pod::Weaver::Plugin::Ditaa</a>:
+Plugin for Pod::Weaver that allows insertion of the output of a Ditaa
+diagram.</li>
+<li><a href="https://metacpan.org/pod/Pod::Weaver::Plugin::Exec">Pod::Weaver::Plugin::Exec</a>:
+Plugin for Pod::Weaver that allows insertion of the output of an
+arbitrary program.</li>
+<li><a href="https://metacpan.org/pod/Sub::Exporter::Progressive">Sub::Exporter::Progressive</a>:
+Tool to only load Sub::Exporter when the full featureset is used by a
+consumer and instead uses Exporter.  Reduces compilation time and run-time
+requirements.</li>
+<li><a href="https://metacpan.org/pod/Syntax::Feature::Gather">Syntax::Feature::Gather</a>:
+Wrapper layer for Syntax::Keyword::Gather.</li>
+<li><a href="https://metacpan.org/pod/Syntax::Keyword::Gather">Syntax::Keyword::Gather</a>:
+Backported implementation of Perl 6's <code>gather</code>/<code>take</code> syntax.</li>
+<li><a href="https://metacpan.org/pod/Syntax::Keyword::Junction">Syntax::Keyword::Junction</a>:
+Backported implementation of Perl 6's junctions.</li>
+<li><a href="https://metacpan.org/pod/Web::Util::DBIC::Paging">Web::Util::DBIC::Paging</a>:
+Abstracted module to allow pagination of DBIx::Class ResultSets in any web
+framework.</li>
+<li><a href="https://metacpan.org/pod/Win32::ServiceManager">Win32::ServiceManager</a>:
+Module to start, stop, and restart services in Microsoft Windows.</li>
+<li><a href="https://metacpan.org/pod/warnings::illegalproto">warnings::illegalproto</a>:
+Module to allow disabling warnings about illegal prototypes.  Pretty much
+exists for Web::Simple.</li>
+</ul>
+<h3 id="adopted-modules">Adopted Modules</h3>
+<p>I took over releasing these modules either to scratch an itch or just help out.
+Unless otherwise noted, I generally took patches that had been outstanding for a
+long time, applied them, and released the code.</p>
+<ul>
+<li><a href="https://metacpan.org/pod/Catalyst::View::CSS::Minifier::XS">Catalyst::View::CSS::Minifier::XS</a></li>
+<li><a href="https://metacpan.org/pod/Catalyst::View::JavaScript::Minifier::XS">Catalyst::View::JavaScript::Minifier::XS</a></li>
+<li><a href="https://metacpan.org/pod/CGI::Application::Plugin::Session">CGI::Application::Plugin::Session</a></li>
+<li><a href="https://metacpan.org/pod/Data::Dumper::Concise">Data::Dumper::Concise</a></li>
+<li><a href="https://metacpan.org/pod/DBIx::Class::QueryLog">DBIx::Class::QueryLog</a></li>
+<li><a href="https://metacpan.org/pod/Feed::Pipe">Feed::Pipe</a></li>
+<li><a href="https://metacpan.org/pod/distribution/IO-All/lib/IO/All.pod">IO::All</a></li>
+<li><a href="https://metacpan.org/pod/Math::Random::Secure">Math::Random::Secure</a>:
+On top of converting this to Moo, I was able to make it more secure by
+regenerating the seed after a fork.</li>
+<li><a href="https://metacpan.org/pod/Net::Amazon::DynamoDB">Net::Amazon::DynamoDB</a></li>
+</ul>
+<h3 id="unreleased-modules">Unreleased Modules</h3>
+<p>These are modules I never released.  Either they are incomplete or there is some
+unresolved issue that caused me to not bring myself to release them.</p>
+<ul>
+<li><a href="https://github.com/frioux/Carp-Skip">Carp::Skip</a>: Originally built by
+ribasushi inside of DBIx::Class.</li>
+<li><a href="https://github.com/frioux/DBIx-Exceptions">DBIx::Exceptions</a>: This module
+parses exceptions returned by a variety of RDBMS engines and returns them
+as objects.</li>
+<li><a href="https://github.com/frioux/Catalyst-ActionRole-TxnDo">Catalyst::ActionRole::TxnDo</a>:
+Wrap actions in transactions automatically.  No idea why I never released
+this.</li>
+<li><a href="https://github.com/frioux/Clone-Hooker">Clone::Hooker</a>: Part of <a href="https://blog.afoolishmanifesto.com/posts/cloning-objects-in-perl/">a weird
+project</a>
+related to cloning objects at arbitrary depth.</li>
+<li><a href="https://github.com/frioux/DBIx-Class-VersionControl">DBIx::Class::VersionControl</a>:
+An aspirational sketch of the API I wanted out of the (also unreleased)
+DBIx::Class::Shadow.</li>
+<li><a href="https://github.com/frioux/GPGME-FFI">GPGME::FFI</a>: FFI interface to
+<a href="https://www.gnupg.org/%28es%29/related_software/gpgme/index.html">gpgme</a>.</li>
+<li><a href="https://github.com/frioux/hzw">HTML::Zoom::Widgets</a>: My failed attempt at
+implementing a high level widget system on top of HTML::Zoom.</li>
+<li><a href="https://github.com/frioux/MooseX-Role-ApplyHooks">MooseX::Role::ApplyHooks</a>:
+This module would allow authors to run arbitrary code when Moose roles were
+consumed.  Didn't release because Stevan asked me not to.</li>
+<li><a href="https://github.com/frioux/Web-MachineX-Goldberg">Web::MachineX::Goldberg</a>: A
+layer built on top of Web::Machine and DBIx::Class inspired by my
+<a href="https://github.com/frioux/drinkup">drinkup</a> project.
+Tim Bunce released a far superior version as WebAPI::DBIC.</li>
+</ul>
+<h2 id="docker-images">Docker Images</h2>
+<p>I run a bunch of software as Docker containers on my laptop.  To make that work
+I define images in github.  These are all of varying quality and usefulness.</p>
+<ul>
+<li><a href="https://github.com/frioux/aws-cli.dkr">aws cli</a>: I use this multiple times a
+week.</li>
+<li><a href="https://github.com/frioux/frew-perl">frew perl</a>: Never used this.</li>
+<li><a href="https://github.com/frioux/goobook">goobook</a>: I use this daily, at least.</li>
+<li><a href="https://github.com/frioux/hq.dkr">hq</a>: Sadly I can't use this much because
+most websites are Javascript heavy.</li>
+<li><a href="https://github.com/frioux/httpd">httpd</a>: The intention was to replace my
+linode's apache installation with this.  I just axed my linode instead.</li>
+<li><a href="https://github.com/frioux/hugo.dkr">hugo</a>: This was useful when the color
+coding in Hugo was done by Python.  Now that syntax highlighting is part of
+the static binary I don't use it anymore.</li>
+<li><a href="https://github.com/frioux/jmespath.terminal.dkr">jmespath terminal</a>: Never
+used.</li>
+<li><a href="https://github.com/frioux/offlineimap.dkr">OfflineIMAP</a>: Constantly using
+this to have local email.</li>
+<li><a href="https://github.com/frioux/pgcli.dkr">PgCLI</a>: Never used.</li>
+<li><a href="https://github.com/frioux/rakudo.dkr">Rakudo</a>: Never used.</li>
+<li><a href="https://github.com/frioux/s3cmd.dkr">s3cmd</a>: I used this when I publish my
+blog.</li>
+<li><a href="https://github.com/frioux/docker-ttrss-1">TinyTiny RSS</a>: Never used this.</li>
+<li><a href="https://github.com/frioux/weechat.dkr">WeeChat</a>: I use this for IRC and
+sometimes Slack.</li>
+</ul>
+<h2 id="forks">Forks</h2>
+<p>These are forks that are maintained for more than shipping a patch.</p>
+<ul>
+<li><a href="https://github.com/frioux/awesome-utils">awesome-utils</a> and
+<a href="https://github.com/frioux/awesome-vicious">awesome-vicious</a> were forked to
+access files instead of a remote weather service, to keep from blocking the
+interface when the internet was down.</li>
+<li><a href="https://github.com/frioux/charitable">charitable</a> is a long lived fork of
+<a href="https://github.com/solodkiy/sharetags">sharetags</a> to provide a more
+XMonad like multihead interface.</li>
+<li><a href="https://github.com/frioux/ergodox-firmware">ergodox-firmware</a>: A fork of
+the original ergodox firmware to define my keyboard's layout.</li>
+<li><a href="https://github.com/frioux/ExtJS-frew">ExtJS</a>:
+<a href="https://blog.afoolishmanifesto.com/posts/my-fork-of-extjs/">Self righteous fork</a></li>
+<li><a href="https://github.com/frioux/godoc2md">godoc2md</a>: A fork of Dave Cheney's
+<code>godoc2md</code> that works better for me.</li>
+<li><a href="https://github.com/DATA-DOG/go-sqlmock">go-sqlmock</a>: fork to allow running
+queries over and over again.</li>
+<li><a href="https://github.com/frioux/netrc">netrc</a>: Fixes the same silly bug
+implemented in the Python netrc module where you can only have one
+user/password per host.</li>
+<li><a href="https://github.com/frioux/offlineimap">OfflineIMAP</a>: OfflineIMAP maintainers
+were unwilling to accept a patch to fix the netrc module, so I maintain
+this fork.  I should build a netrc filter to obviate the need.</li>
+<li><a href="https://github.com/frioux/tmk_keyboard">tmk_keyboard</a>: A fork of a fork of
+TMK to define my keyboard's layout.</li>
+<li><a href="https://github.com/frioux/yaml">yaml</a>: Removes the silly feature from
+go-yaml to support hashes with a boolean key.</li>
+</ul>
+<h2 id="git-conversions">Git Conversions</h2>
+<p>I've converted something like seventy-five repositories to Git.  At some point
+I'll make a list, but in the meantime <a href="https://github.com/frioux/Git-Conversions">check it out</a>.</p>
+<h2 id="go">Go</h2>
+<ul>
+<li><a href="https://github.com/frioux/manifests">github.com/frioux/manifests</a>: Made as
+<a href="https://blog.afoolishmanifesto.com/posts/validating-kubernetes-manifests/">an example of how to do k8s manifest
+validation</a></li>
+<li><a href="https://github.com/frioux/mozcookiejar">github.com/frioux/mozcookiejar</a>:
+package that allows accessing the cookies of Firefox or other Mozilla
+products.</li>
+<li><a href="https://github.com/frioux/mozlz4">github.com/frioux/mozlz4</a>:
+package that reads the non-standard mozlz4 / jsonlz4 file format used by
+Firefox and other Mozilla products.</li>
+<li><a href="https://github.com/frioux/shellquote">github.com/frioux/shellquote</a>:
+package that quotes tokens for use in shell or shell-like contexts.</li>
+<li><a href="https://github.com/ZipRecruiter/cloudwatching">github.com/ZipRecruiter/cloudwatching</a>:
+Export cloudwatch metrics as prometheus metrics efficiently.</li>
+</ul>
+<h2 id="misc">Misc</h2>
+<ul>
+<li><a href="https://github.com/frioux/app-adenosine-prefab">App::Adenosine prefab</a> is a
+fully fatpacked version of <code>App::Adenosine</code></li>
+<li><a href="https://github.com/frioux/LCP6">LCP6</a>: Aborted port of Log::Contextual to
+Perl 6.</li>
+<li><a href="https://github.com/frioux/Template-Tiny-js">Template-Tiny-js</a>: A port of
+Template::Tiny to Javascript, because ExtJS templates were buggy.</li>
+<li>https://github.com/frioux/webfilters: Personal filters to make websites less
+annoying.</li>
+<li>https://github.com/frioux/brew.afoolishmanifesto.com</li>
+<li>https://github.com/frioux/cell.afoolishmanifesto.com</li>
+<li>https://github.com/frioux/fp</li>
+<li>https://github.com/frioux/goat-mem</li>
+<li>https://github.com/frioux/mssql-docker-demo</li>
+<li>https://github.com/frioux/notes-example</li>
+<li>https://github.com/frioux/pico-8</li>
+<li>https://github.com/frioux/quick-scope</li>
+<li>https://github.com/frioux/tic-toc</li>
+<li>https://github.com/frioux/zmeu-multimech</li>
+</ul>
+<h2 id="personal">Personal</h2>
+<ul>
+<li><a href="https://github.com/frioux/amygdala">Amygdala</a>: Tool to add automation to notes.
+Modern replacement for Lizard Brain.</li>
+<li><a href="https://github.com/frioux/Catherine25">Catherine25</a>: Silly encryption system
+made for a birthday.</li>
+<li><a href="https://frioux.github.io/clog">clog</a>: My coffee roasting and cupping log.</li>
+<li><a href="https://github.com/frioux/dotfiles">dotfiles</a>: dotfiles that are installed
+on every system I use.</li>
+<li><a href="https://github.com/frioux/drinks">drinks</a>: Repo to manage cocktail recipes
+in a totally different way than <code>drinkup</code>.</li>
+<li><a href="https://github.com/frioux/Lizard-Brain">Lizard Brain</a>: An abandoned project
+to automate or track much of my life.  Replaced with notes.</li>
+<li><a href="https://frioux.github.io/notes">notes</a>: View of the public portion of my
+notes.</li>
+</ul>
+<h2 id="play">Play</h2>
+<p>These repositories are typicially created to to learn how to use one or more technologies.</p>
+<ul>
+<li>https://github.com/frioux/Log-Robot</li>
+<li>https://github.com/frioux/Async-play</li>
+<li>https://github.com/frioux/Business-Card</li>
+<li>https://github.com/frioux/Games-NewWorldOfDarkness</li>
+<li>https://github.com/frioux/IO-Async-eg</li>
+<li>https://github.com/frioux/PCLI-play</li>
+<li>https://github.com/frioux/TLS-eg</li>
+<li>https://github.com/frioux/TLS-play</li>
+<li>https://github.com/frioux/Wheels-Within-Wheels</li>
+<li>https://github.com/frioux/container-play</li>
+<li>https://github.com/frioux/exercizes</li>
+<li>https://github.com/frioux/fsharp-play</li>
+<li>https://github.com/frioux/game-play</li>
+<li>https://github.com/frioux/geneg</li>
+<li>https://github.com/frioux/go-play</li>
+<li>https://github.com/frioux/go-understanding-computation</li>
+<li>https://github.com/frioux/rust-play</li>
+<li>https://github.com/frioux/sss-pm</li>
+<li>https://github.com/frioux/udp-play</li>
+</ul>
+<h2 id="presentations">Presentations</h2>
+<ul>
+<li><a href="https://frioux.github.io/what-ive-learned-golang">What I've Learned about Golang</a>:
+ZipRecruiter Lightning Talks, 2018.</li>
+<li><a href="https://frioux.github.io/srp-at-zip/">Scalability, Reliability, and Performance at ZipRecruiter</a>:
+YAPC, 2017.</li>
+<li><a href="https://frioux.github.io/blogint/">fREW's Blog Integrations</a>: Los Angeles
+Perl Mongers, 2017.</li>
+<li><a href="https://frioux.github.io/iam-at-ziprecruiter/">IAM at ZipRecruiter</a>:
+Los Angeles Perl Mongers, 2017.</li>
+<li><a href="https://github.com/frioux/frews-miscelaneous-debris">fREW's Miscelaneous Debris</a>:
+A talk going over a pile of topics I did at the Perl Mongers in Los Angeles
+the day before interviewing at ZipRecruiter. 2015</li>
+<li><a href="https://frioux.github.io/dbix-introspector-presentation/">DBIx::Introspector</a>:
+A talk about the eponymous room, which was packed.  YAPC, 2014.</li>
+<li><a href="https://github.com/frioux/yapcna-2014-dbic">DBIx::Class</a>: YAPC, 2014.</li>
+<li><a href="https://frioux.github.io/dbix-class-introduction-presentation/">DBIx::Class Introduction</a>:
+YAPC, 2012.</li>
+<li><a href="https://frioux.github.io/Tool-Presentation">Tools</a>: Mitsi, 2011.</li>
+<li><a href="https://frioux.github.io/Catalyst-Presentation">Catalyst</a>:  Mitsi, 2011.</li>
+<li><a href="https://frioux.github.io/dbix-class-component-presentation/">DBIx::Class Component</a>: YAPC, 2011.</li>
+<li><a href="https://frioux.github.io/dbix-class-shadow-presentation/">DBIx::Class::Shadow</a>: YAPC, 2011.</li>
+<li><a href="https://frioux.github.io/dbix-class-deploymenthandler-presentation/">DBIx::Class::DeploymentHandler</a>:
+YAPC, 2010.</li>
+<li><a href="https://frioux.github.io/dbix-exceptions-presentation/">DBIx::Exceptions</a>:
+YAPC, 2010.</li>
+<li><a href="https://github.com/frioux/git-intro">git intro</a>:
+DFW.p6m, 2010.</li>
+</ul>
+<h2 id="standalone-programs">Standalone Programs</h2>
+<ul>
+<li>https://github.com/frioux/cartool</li>
+<li>https://github.com/frioux/cgid</li>
+<li>https://github.com/frioux/corn</li>
+<li>https://github.com/frioux/debounce</li>
+<li>https://github.com/frioux/drinkup</li>
+<li>https://github.com/frioux/ec2-resource-for-ip</li>
+<li>https://github.com/frioux/export-wordpress-to-ikiwiki</li>
+<li>https://github.com/frioux/go-scraps</li>
+<li>https://github.com/frioux/Harbinger</li>
+<li>https://github.com/frioux/leatherman</li>
+<li>https://github.com/frioux/light-daemon</li>
+<li>https://github.com/frioux/perlcritic-web</li>
+<li>https://github.com/frioux/perltest-web</li>
+<li>https://github.com/frioux/ptome</li>
+<li>https://github.com/frioux/supersearch</li>
+<li>https://github.com/frioux/teatime</li>
+<li>https://github.com/frioux/unproductive</li>
+<li>https://github.com/frioux/webdict</li>
+<li>https://github.com/frioux/w.pl</li>
+</ul>
+<h2 id="submitted-patches">Submitted Patches</h2>
+<ul>
+<li>https://github.com/asticode/go-astilectron-bundler</li>
+<li><a href="easyjson">https://github.com/frioux/easyjson</a>: non trivial patch to migrate
+easyjson to using Go's type checker.  Abandoned when performance goals were
+not met.</li>
+<li>https://github.com/frioux/neilb-blogposts: collaborated with friends Rob Hoelz and Neil Bowers on a blog post.</li>
+<li>https://github.com/frioux/blog-1: collaborated with my friend Rob Hoelz on a blog post.</li>
+<li>https://github.com/frioux/encoding: improved error messages surfaced from segmentio's json encoder.</li>
+<li>https://github.com/frioux/Net-Amazon-Signature-V4</li>
+<li>https://github.com/golang/tools</li>
+<li>https://github.com/mailslurper/mailslurper</li>
+<li>https://github.com/frioux/vim-projectionist</li>
+<li>https://github.com/frioux/Apache-LogFormat-Compiler</li>
+<li>https://github.com/frioux/Email-Reply</li>
+<li>Python: https://bugs.python.org/file42510/netrc.patch</li>
+<li>https://github.com/frioux/vim-obsession</li>
+<li>https://github.com/frioux/offlineimap</li>
+<li>https://github.com/frioux/vim-fugitive</li>
+<li><a href="https://metacpan.org/pod/Amazon::DynamoDB">Amazon::DynamoDB</a></li>
+<li>https://github.com/frioux/taffybar</li>
+<li>https://github.com/frioux/p5-io-socket-ssl</li>
+<li>https://github.com/iovisor/bcc</li>
+<li><a href="https://metacpan.org/pod/App::Genpass">App::Genpass</a></li>
+<li><a href="https://metacpan.org/pod/App::PAUSE::Comaint">App::PAUSE::Comaint</a></li>
+<li><a href="https://metacpan.org/pod/HTML::Restrict">HTML::Restrict</a></li>
+<li><a href="https://metacpan.org/pod/KiokuDB::Backend::DBI">KiokuDB::Backend::DBI</a></li>
+<li><a href="https://metacpan.org/pod/MooX::Types::MooseLike">MooX::Types::MooseLike</a></li>
+<li><a href="https://metacpan.org/pod/Throwable">Throwable</a></li>
+<li>https://github.com/sanbeg/Etsy-Statsd</li>
+<li><a href="https://metacpan.org/pod/Exception::Reporter::Summarizer::Catalyst">Exception::Reporter::Summarizer::Catalyst</a></li>
+<li>https://metacpan.org/pod/App::Nopaste</li>
+<li>https://metacpan.org/pod/SQL::Abstract</li>
+<li>https://metacpan.org/pod/Net::Amazon::Signature::V4</li>
+<li>https://github.com/jwiegley/git-scripts</li>
+<li>https://github.com/frioux/teadash</li>
+<li>https://metacpan.org/pod/Exception::Reporter::Summarizer::Catalyst</li>
+<li>https://github.com/frioux/reply</li>
+<li>http://zsh.sourceforge.net/</li>
+<li>https://www.perl.org/</li>
+<li>https://github.com/Perl/docker-perl</li>
+<li>https://github.com/SirVer/ultisnips</li>
+<li>https://github.com/bluefeet/Starch</li>
+<li>https://github.com/colinnewell/Jenkins-API</li>
+<li>https://github.com/emberjs/website</li>
+<li><a href="https://metacpan.org/pod/Log::Log4perl::Appender::DBIx::Class">Log::Log4perl::Appender::DBIx::Class</a></li>
+<li>https://github.com/go-yaml/yaml</li>
+<li>https://github.com/kazeburo/Gazelle</li>
+<li>https://github.com/rjbs/Email-MIME-Kit</li>
+<li>https://github.com/rjbs/Email-Stuffer</li>
+<li>https://github.com/rjbs/Getopt-Long-Descriptive</li>
+<li>https://github.com/syncthing/syncthing</li>
+<li>https://github.com/tmux/tmux</li>
+<li>https://github.com/tomnomnom/gron</li>
+<li><a href="vicious">https://github.com/vicious-widgets/vicious</a>: added more detail to
+weather widget.</li>
+<li>https://github.com/yanick/git-cpan-patch</li>
+<li>https://github.com/miyagawa/docker-plenv-vanilla</li>
+<li>https://metacpan.org/pod/Catalyst::Action::REST</li>
+<li>https://metacpan.org/pod/Email::MIME</li>
+<li>https://metacpan.org/pod/Exporter::Declare</li>
+<li>https://metacpan.org/pod/IO::Async::JSONStream</li>
+<li>https://metacpan.org/pod/IO::Async</li>
+<li>https://metacpan.org/pod/Net::Async::XMPP</li>
+<li>https://metacpan.org/pod/App::PAUSE::Comaint</li>
+<li>https://metacpan.org/pod/Net::Async::HTTP</li>
+<li>https://metacpan.org/pod/Win32::Service</li>
+<li>https://metacpan.org/pod/Test::Roo</li>
+<li>https://metacpan.org/pod/DBIx::Locker</li>
+<li>https://metacpan.org/pod/Archive::Zip</li>
+<li>https://metacpan.org/pod/Web::Machine</li>
+<li>https://metacpan.org/pod/WebService::Bonusly</li>
+<li>https://github.com/papers-we-love/papers-we-love</li>
+</ul>
+<h2 id="vim-plugins">Vim Plugins</h2>
+<ul>
+<li><a href="https://github.com/frioux/vim-lost">lost.vim</a>: Find where you are
+in a large file.</li>
+<li><a href="https://github.com/frioux/vim-regedit">regedit.vim</a>: Easily edit registers.</li>
+</ul>
+<h2 id="wip">WIP</h2>
+<p>These repositories are typically very unpolished, lacking little or any of what
+is needed to use them, and maybe not even enough to learn from.</p>
+<ul>
+<li>https://github.com/frioux/App-Moirai</li>
+<li>https://github.com/frioux/DBIx-Class-Schema-Auth</li>
+<li>https://github.com/frioux/DBIx-Reflect</li>
+<li>https://github.com/frioux/Dist-Zilla-SettingsFromREADME</li>
+<li>https://github.com/frioux/FeedPipe.py</li>
+<li>https://github.com/frioux/WWW-RetroPie-Game-Picker</li>
+<li>https://github.com/frioux/Web-Util-ExtPaging</li>
+<li>https://github.com/frioux/WebService-TTRSS</li>
+<li>https://github.com/frioux/data-stream-bulk</li>
+<li>https://github.com/frioux/docker-ttrss</li>
+<li><a href="https://github.com/frioux/error-injector">errinj</a>: ambitious
+error-injection projection.</li>
+<li>https://github.com/frioux/falcor2</li>
+<li>https://github.com/frioux/git-ack</li>
+<li>https://github.com/frioux/git-super-status</li>
+<li><a href="https://github.com/frioux/ogma">ogma</a>: Full test search for my books.</li>
+<li>https://github.com/frioux/sysdig</li>
+<li>https://github.com/frioux/win32-prove</li>
+<li>https://github.com/frioux/ircparser</li>
+<li>https://github.com/frioux/autopot</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags/reference">reference</a></li>
+<li><a href="/notes/tags/project">project</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>
