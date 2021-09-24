@@ -1,0 +1,562 @@
+<html>
+  <head>
+    <title>Pragmatic Programmer - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="Pragmatic Programmer" />
+    <meta name="twitter:title" content="Pragmatic Programmer" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>Pragmatic Programmer</h1>
+<ul>
+<li>Tips
+<ol>
+<li>Care About Your Craft
+<ul>
+<li>Why spend your life developing software unless you care about doing it well?</li>
+</ul>
+</li>
+<li>Think! About Your Work
+<ul>
+<li>Turn off the autopilot and take control. Constantly critique and appraise your work.</li>
+</ul>
+</li>
+<li>Provide Options, Don't Make Lame Excuses
+<ul>
+<li>Instead of excuses, provide options. Don't say it can't be done: explain what can be done.</li>
+</ul>
+</li>
+<li>Don't Live With Broken Windows
+<ul>
+<li>Fix bad designs, wrong decisions, and poor code when you see them.</li>
+</ul>
+</li>
+<li>Be a Catalyst for Change
+<ul>
+<li>You can't force change on people. Instead, show them how the future might be and help them participate in creating it.</li>
+</ul>
+</li>
+<li>Remember the Big Picture
+<ul>
+<li>Don't get so engrossed in the details that you forget to check what's happening around you.</li>
+</ul>
+</li>
+<li>Make Quality a Requirements Issue
+<ul>
+<li>Involve your users in determining the project's real quality requirements.</li>
+</ul>
+</li>
+<li>Invest Regularly in Your Knowledge Portfolio
+<ul>
+<li>Make learning a habit.</li>
+</ul>
+</li>
+<li>Critically Analyze What You Read and Hear
+<ul>
+<li>Don’t be swayed by vendors, media hype, or dogma. Analyze information in terms of you and your project.</li>
+</ul>
+</li>
+<li>It’s Both What You Say and the Way You Say It</li>
+</ol>
+<ul>
+<li>There’s no point in having great ideas if you don’t communicate them effectively.</li>
+</ul>
+<ol start="11">
+<li>DRY–Don’t Repeat Yourself</li>
+</ol>
+<ul>
+<li>Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.</li>
+</ul>
+<ol start="12">
+<li>Make It Easy to Reuse</li>
+</ol>
+<ul>
+<li>If it’s easy to reuse, people will. Create an environment that supports reuse.</li>
+</ul>
+<ol start="13">
+<li>Eliminate Effects Between Unrelated Things</li>
+</ol>
+<ul>
+<li>Design components that are self-contained. independent, and have a single, well-defined purpose.</li>
+</ul>
+<ol start="14">
+<li>There Are No Final Decisions</li>
+</ol>
+<ul>
+<li>No decision is cast in stone. Instead, consider each as being written in the sand at the beach, and plan for change.</li>
+</ul>
+<ol start="15">
+<li>Use Tracer Bullets to Find the Target</li>
+</ol>
+<ul>
+<li>Tracer bullets let you home in on your target by trying things and seeing how close they land.</li>
+</ul>
+<ol start="16">
+<li>Prototype to Learn</li>
+</ol>
+<ul>
+<li>Prototyping is a learning experience. Its value lies not in the code you produce, but in the lessons you learn.</li>
+</ul>
+<ol start="17">
+<li>Program Close to the Problem Domain</li>
+</ol>
+<ul>
+<li>Design and code in your user’s language.</li>
+</ul>
+<ol start="18">
+<li>Estimate to Avoid Surprises before you start. You’ll spot potential problems up front.</li>
+<li>Iterate the Schedule with the Code</li>
+</ol>
+<ul>
+<li>Use experience you gain as you implement to refine the project time scales.</li>
+</ul>
+<ol start="20">
+<li>Keep Knowledge in Plain Text</li>
+</ol>
+<ul>
+<li>Plain text won’t become obsolete. It helps leverage your work and simplifies debugging and testing.</li>
+</ul>
+<ol start="21">
+<li>Use the Power of Command Shells</li>
+</ol>
+<ul>
+<li>Use the shell when graphical user interfaces don’t cut it.</li>
+</ul>
+<ol start="22">
+<li>Use a Single Editor Well</li>
+</ol>
+<ul>
+<li>The editor should be an extension of your hand; make sure your editor is configurable, extensible, and programmable.</li>
+</ul>
+<ol start="23">
+<li>Always Use Source Code Control</li>
+</ol>
+<ul>
+<li>Source code control is a time machine for your work—you can go back.</li>
+</ul>
+<ol start="24">
+<li>Fix the Problem, Not the Blame</li>
+</ol>
+<ul>
+<li>It doesn’t really matter whether the bug is your fault or some one else’s—it is still your problem, and it still needs to be fixed.</li>
+</ul>
+<ol start="25">
+<li>Don’t Panic When Debugging</li>
+</ol>
+<ul>
+<li>Take a deep breath and THINK! about what could be causing the bug.</li>
+</ul>
+<ol start="26">
+<li>“select” Isn’t Broken.</li>
+</ol>
+<ul>
+<li>It is rare to find a bug in the OS or the compiler, or even a third-party product or library. The bug is most likely in the application.</li>
+</ul>
+<ol start="27">
+<li>Don’t Assume It—Prove It</li>
+</ol>
+<ul>
+<li>Prove your assumptions in the actual environment– with real data and boundary conditions.</li>
+</ul>
+<ol start="28">
+<li>Learn a Text Manipulation Language.</li>
+</ol>
+<ul>
+<li>You spend a large part of each day working with text. Why not have the computer do some of it for you?</li>
+</ul>
+<ol start="29">
+<li>Write Code That Writes Code</li>
+</ol>
+<ul>
+<li>Code generators increase your productivity and help avoid duplication.</li>
+</ul>
+<ol start="30">
+<li>You Can’t Write Perfect Software</li>
+</ol>
+<ul>
+<li>Software can’t be perfect. Protect your code and users from the inevitable errors.</li>
+</ul>
+<ol start="31">
+<li>Design with Contracts</li>
+</ol>
+<ul>
+<li>Use contracts to document and verify that code does no more and no less than it claims to do.</li>
+</ul>
+<ol start="32">
+<li>Crash Early</li>
+</ol>
+<ul>
+<li>A dead program normally does a lot less damage than a crippled one.</li>
+</ul>
+<ol start="33">
+<li>Use Assertions to Prevent the Impossible</li>
+</ol>
+<ul>
+<li>Assertions validate your assumptions. Use them to protect your code from an uncertain world.</li>
+</ul>
+<ol start="34">
+<li>Use Exceptions for Exceptional Problems</li>
+</ol>
+<ul>
+<li>Exceptions can suffer from all the readability and maintain ability problems of classic spaghetti code.  Reserve exceptions for exceptional things.</li>
+</ul>
+<ol start="35">
+<li>Finish What You Start</li>
+</ol>
+<ul>
+<li>Where possible, the routine or object that allocates a resource should be responsible for deallocating it.</li>
+</ul>
+<ol start="36">
+<li>Minimize Coupling Between Modules</li>
+</ol>
+<ul>
+<li>Avoid coupling by writing “shy” code and applying the Law of Demeter.</li>
+</ul>
+<ol start="37">
+<li>Configure, Don’t Integrate</li>
+</ol>
+<ul>
+<li>Implement technology choices for an application as configuration options, not through integration or engineering.</li>
+</ul>
+<ol start="38">
+<li>Put Abstractions in Code, Details in Metadata</li>
+</ol>
+<ul>
+<li>Program for the general case, and put the specifics outside the compiled code base.</li>
+</ul>
+<ol start="39">
+<li>Analyze Workflow to Improve Concurrency</li>
+</ol>
+<ul>
+<li>Exploit concurrency in your user’s workflow.</li>
+</ul>
+<ol start="40">
+<li>Design Using Services</li>
+</ol>
+<ul>
+<li>Design in terms of services—independent, concurrent objects behind well-defined, consistent interfaces.</li>
+</ul>
+<ol start="41">
+<li>Always Design for Concurrency</li>
+</ol>
+<ul>
+<li>Allow for concurrency, and you’ll design cleaner interfaces with fewer assumptions.</li>
+</ul>
+<ol start="42">
+<li>Separate Views from Models</li>
+</ol>
+<ul>
+<li>Gain flexibility at low cost by designing your application in terms of models and views.</li>
+</ul>
+<ol start="43">
+<li>Use Blackboards to Coordinate Workflow</li>
+</ol>
+<ul>
+<li>Use blackboards to coordinate disparate facts and agents, while maintaining independence and isolation among participants.</li>
+</ul>
+<ol start="44">
+<li>Don’t Program by Coincidence</li>
+</ol>
+<ul>
+<li>Rely only on reliable things. Beware of accidental complexity, and don’t confuse a happy coincidence with a purposeful plan.</li>
+</ul>
+<ol start="45">
+<li>Estimate the Order of Your Algorithms</li>
+</ol>
+<ul>
+<li>Get a feel for how long things are likely to take before you write code.</li>
+</ul>
+<ol start="46">
+<li>Test Your Estimates</li>
+</ol>
+<ul>
+<li>Mathematical analysis of algorithms doesn’t tell you every thing. Try timing your code in its target environment.</li>
+</ul>
+<ol start="47">
+<li>Refactor Early, Refactor Often</li>
+</ol>
+<ul>
+<li>Just as you might weed and rearrange a garden, rewrite, rework, and re-architect code when it needs it. Fix the root of the problem.</li>
+</ul>
+<ol start="48">
+<li>Design to Test</li>
+</ol>
+<ul>
+<li>Start thinking about testing before you write a line of code.</li>
+</ul>
+<ol start="49">
+<li>Test Your Software, or Your Users Will</li>
+</ol>
+<ul>
+<li>Test ruthlessly. Don’t make your users find bugs for you.</li>
+</ul>
+<ol start="50">
+<li>Don’t Use Wizard Code You Don’t Understand</li>
+</ol>
+<ul>
+<li>Wizards can generate reams of code. Make sure you understand all of it before you incorporate it into your project.</li>
+</ul>
+<ol start="51">
+<li>Don’t Gather Requirements–Dig for Them</li>
+</ol>
+<ul>
+<li>Requirements rarely lie on the surface. They’re buried deep beneath layers of assumptions, misconceptions, and politics.</li>
+</ul>
+<ol start="52">
+<li>Work with a User to Think Like a User</li>
+</ol>
+<ul>
+<li>It’s the best way to gain insight into how the system will really be used.</li>
+</ul>
+<ol start="53">
+<li>Abstractions Live Longer than Details</li>
+</ol>
+<ul>
+<li>Invest in the abstraction, not the implementation. Abstractions can survive the barrage of changes from different implementations and new technologies.</li>
+</ul>
+<ol start="54">
+<li>Use a Project Glossary</li>
+</ol>
+<ul>
+<li>Create and maintain a single source of all the specific terms and vocabulary for a project.</li>
+</ul>
+<ol start="55">
+<li>Don’t Think Outside the Box–Find the Box</li>
+</ol>
+<ul>
+<li>When faced with an impossible problem, identify the real constraints. Ask yourself: “Does it have to be done this way? Does it have to be done at all?”</li>
+</ul>
+<ol start="56">
+<li>Start When You’re Ready.</li>
+</ol>
+<ul>
+<li>You’ve been building experience all your life. Don’t ignore niggling doubts.</li>
+</ul>
+<ol start="57">
+<li>Some Things Are Better Done than Described</li>
+</ol>
+<ul>
+<li>Don’t fall into the specification spiral—at some point you need to start coding.</li>
+</ul>
+<ol start="58">
+<li>Don’t Be a Slave to Formal Methods.</li>
+</ol>
+<ul>
+<li>Don’t blindly adopt any technique without putting it into the context of your development practices and capabilities.</li>
+</ul>
+<ol start="59">
+<li>Costly Tools Don’t Produce Better Designs</li>
+</ol>
+<ul>
+<li>Beware of vendor hype, industry dogma, and the aura of the price tag. Judge tools on their merits.</li>
+</ul>
+<ol start="60">
+<li>Organize Teams Around Functionality</li>
+</ol>
+<ul>
+<li>Don’t separate designers from coders, testers from data modelers. Build teams the way you build code.</li>
+</ul>
+<ol start="61">
+<li>Don’t Use Manual Procedures</li>
+</ol>
+<ul>
+<li>A shell script or batch file will execute the same instructions, in the same order, time after time.</li>
+</ul>
+<ol start="62">
+<li>Test Early. Test Often. Test Automatically</li>
+</ol>
+<ul>
+<li>Tests that run with every build are much more effective than test plans that sit on a shelf.</li>
+</ul>
+<ol start="63">
+<li>Coding Ain’t Done ‘Til All the Tests Run</li>
+</ol>
+<ul>
+<li>‘Nuff said.</li>
+</ul>
+<ol start="64">
+<li>Use Saboteurs to Test Your Testing</li>
+</ol>
+<ul>
+<li>Introduce bugs on purpose in a separate copy of the source to verify that testing will catch them.</li>
+</ul>
+<ol start="65">
+<li>Test State Coverage, Not Code Coverage</li>
+</ol>
+<ul>
+<li>Identify and test significant program states. Just testing lines of code isn’t enough.</li>
+</ul>
+<ol start="66">
+<li>Find Bugs Once</li>
+</ol>
+<ul>
+<li>Once a human tester ﬁnds a bug, it should be the last time a human tester ﬁnds that bug. Automatic tests should check for it from then on.</li>
+</ul>
+<ol start="67">
+<li>English is Just a Programming Language</li>
+</ol>
+<ul>
+<li>Write documents as you would write code: honor the DRY principle, use metadata, MVC, automatic generation, and so on.</li>
+</ul>
+<ol start="68">
+<li>Build Documentation In, Don’t Bolt It On</li>
+</ol>
+<ul>
+<li>Documentation created separately from code is less likely to be correct and up to date.</li>
+</ul>
+<ol start="69">
+<li>Gently Exceed Your Users’ Expectations</li>
+</ol>
+<ul>
+<li>Come to understand your users’ expectations, then deliver just that little bit more.</li>
+</ul>
+<ol start="70">
+<li>Sign Your Work</li>
+</ol>
+<ul>
+<li>Craftsmen of an earlier age were proud to sign their work. You should be, too.</li>
+</ul>
+</li>
+<li>Checklists
+<ul>
+<li>Languages To Learn
+<ul>
+<li>Tired of C, C++, and Java? Try CLOS, Dylan, Eiffel, Objective C, Prolog, Smalltalk, or TOM. Each of these languages has different capabilities and a different “ﬂavor.&quot; Try a small project at home using one or more of them.</li>
+</ul>
+</li>
+<li>The WISDOM Acrostic
+<ul>
+<li>What do you want them to learn?</li>
+<li>What is their interest in what you’ve got to say?</li>
+<li>How sophisticated are they?</li>
+<li>How much detail do they want?</li>
+<li>Whom do you want to own the information?</li>
+<li>How can you motivate them to listen to you?</li>
+</ul>
+</li>
+<li>How to Maintain Orthogonality
+<ul>
+<li>Design independent, well-defined components.</li>
+<li>Keep your code decoupled.</li>
+<li>Avoid global data.</li>
+<li>Refactor similar functions.</li>
+</ul>
+</li>
+<li>Things to prototype
+<ul>
+<li>Architecture</li>
+<li>New functionality in an existing system</li>
+<li>Structure or contents of external data</li>
+<li>Third-party tools or components</li>
+<li>Performance issues</li>
+<li>User interface design</li>
+</ul>
+</li>
+<li>Architectural Questions
+<ul>
+<li>Are responsibilities well deﬁned?</li>
+<li>Are the collaborations well deﬁned?</li>
+<li>Is coupling minimized?</li>
+<li>Can you identify potential duplication?</li>
+<li>Are interface definitions and constraints acceptable?</li>
+<li>Can modules access needed data—when needed?</li>
+</ul>
+</li>
+<li>Debugging Checklist
+<ul>
+<li>Is the problem being reported a direct result of the underlying bug, or merely a symptom?</li>
+<li>Is the bug really in the compiler? Is it in the OS? Or is it in your code?</li>
+<li>If you explained this problem in detail to a coworker, what would you say?</li>
+<li>If the suspect code passes its unit tests, are the tests complete enough? What happens if you run the unit test with this data?</li>
+<li>Do the conditions that caused this bug exist anywhere else in the system?</li>
+</ul>
+</li>
+<li>Law of Demeter for Functions
+<ul>
+<li>An object’s method should call only methods belonging to:
+<ul>
+<li>Itself</li>
+<li>Any parameters passed in</li>
+<li>Objects it creates</li>
+<li>Component objects</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>How to Program Deliberately
+<ul>
+<li>Stay aware of what you’re doing.</li>
+<li>Don’t code blindfolded.</li>
+<li>Proceed from a plan.</li>
+<li>Rely only on reliable things.</li>
+<li>Document your assumptions.</li>
+<li>Test assumptions as well as code.</li>
+<li>Prioritize your effort.</li>
+<li>Don’t be a slave to history.</li>
+</ul>
+</li>
+<li>When to Refactor
+<ul>
+<li>You discover a violation of the DRY principle.</li>
+<li>You ﬁnd things that could be more orthogonal.</li>
+<li>Your knowledge improves.</li>
+<li>The requirements evolve.</li>
+<li>You need to improve performance.</li>
+</ul>
+</li>
+<li>Cutting the Gordian Knot
+<ul>
+<li>When solving impossible problems, ask yourself:
+<ul>
+<li>Is there an easier way?</li>
+<li>Am I solving the right problem?</li>
+<li>Why is this a problem?</li>
+<li>What makes it hard?</li>
+<li>Do I have to do it this way?</li>
+<li>Does it have to be done at all?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Aspects of Testing
+<ul>
+<li>Unit testing</li>
+<li>Integration testing</li>
+<li>Validation and veriﬁcation</li>
+<li>Resource exhaustion, errors, and recovery</li>
+<li>Performance testing</li>
+<li>Usability testing</li>
+<li>Testing the tests themselves</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags/reference">reference</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>

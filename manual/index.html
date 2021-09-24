@@ -1,0 +1,222 @@
+<html>
+  <head>
+    <title>Manual - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="Manual" />
+    <meta name="twitter:title" content="Manual" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>Manual</h1>
+<h2 id="reference">Reference</h2>
+<h3 id="foundations">foundations</h3>
+<h4 id="dropbox">Dropbox</h4>
+<p>Dropbox is both used as a simple way for me to read and modify documents on my
+phone, as well as a generic transport for programs to read and write to.  I
+suspect that without Dropbox any other automation would be much harder.</p>
+<h4 id="heroku">Heroku</h4>
+<p>Heroku is where I host the tool receiving messages from Twilio.  Hosting
+elsewhere is obviously possible but Heroku is free at my usage level and super
+simple.</p>
+<h4 id="hugohttpsgohugoio"><a href="https://gohugo.io/">Hugo</a></h4>
+<p>Hugo is a simple and fast static-site generator that I use to provide the
+read-only browser-based view of these notes.</p>
+<p>The following is a screenshot (with sensitive parts blurred) of my homepage,
+which uses tags on the notes to aggregate them in various sections.</p>
+<img src="/notes/img/notes-landing-2019.png" style="border: 2px solid black;" />
+<p>XXX: link to source of homepage once public</p>
+<h4 id="leatherman">Leatherman</h4>
+<p>For a few of the tools described later, I use <a href="https://github.com/frioux/leatherman">my
+leatherman</a>, which has
+various commands that are generally useful.</p>
+<h4 id="twilio">Twilio</h4>
+<p>Twilio allows a basic but very useful SMS interface.</p>
+<h3 id="amygdalahttpsgithubcomfriouxamygdala"><a href="https://github.com/frioux/amygdala">amygdala</a></h3>
+<p><code>amygdala</code> is a service I built to handle tasks from my phone.  It is built to
+have SMS inputs and outputs, though can do a touch more.</p>
+<h4 id="todo">todo</h4>
+<p>This is the default action; if your statement matches nothing, a note is added
+to my dropbox with the <code>inbox</code> tag such that it end up on the homepage or
+viewable via <code>:In</code>.</p>
+<h4 id="inspire-me">inspire me</h4>
+<p>If I text <code>inspire me</code> to amygdala, the response will be a random line from
+<a href="/notes/posts/inspiration/">my inspiration</a>.</p>
+<h4 id="remind-me">remind me</h4>
+<p>If I text <code>remind me to &lt;do whatever&gt; at &lt;some time&gt;</code> a reminder will be
+enqueued.  Currently that triggers via pushover and <code>wall(1)</code>, though I intend
+to add more in the future.</p>
+<h3 id="vim">Vim</h3>
+<h4 id="epost-enw-enh-evim-ein">:Epost :Enw :Enh :Evim :Ein</h4>
+<p>These commands are automatically created by
+<a href="https://github.com/tpope/vim-projectionist">vim-projectionist</a>; <code>:Epost &lt;post&gt;</code>
+allows you to quickly access a note by name.  If the note doesn't already exist
+a basic but functional starter template is provided.</p>
+<p><code>:Enw</code>, <code>:Enh</code>, <code>:Evim</code>, and <code>:Ein</code> jump directly to the next-steps work note,
+the next-steops home note,  the vim plugin, and the inbox note.</p>
+<h4 id="tagged">:Tagged</h4>
+<p>Populates the quickfix with any notes that have the passed tag.</p>
+<h4 id="in">:In</h4>
+<p>Populates the quickfix with all the notes tagged <code>inbox</code>.  Typically these notes
+are created via <a href="https://github.com/frioux/amygdala">amygdala</a>'s
+<a href="https://github.com/frioux/amygdala#todo">todo</a>.</p>
+<h4 id="done">:Done</h4>
+<p>Deletes the current note and moves to the next one in the quickfix; for use with
+<code>:In</code>.</p>
+<h4 id="rss">:RSS</h4>
+<p>Writes a markdown link for all new posts to the current buffer.  Calls
+<code>:Undefer</code> to maintain a simpler interface.  <a href="#load-rss">Uses <code>load-rss</code></a>.</p>
+<h4 id="undefer">:Undefer</h4>
+<p><code>:Undefer</code> <a href="https://github.com/frioux/leatherman#undefer">undefer</a>'s any
+deferred content to the current buffer. <a href="#run-undefer">Uses <code>run-undefer</code></a>.</p>
+<h4 id="fxtabs">:FxTabs</h4>
+<p><code>:FxTabs</code> writes a markdown link for each tab to the current buffer.  Can take
+arguments which will be passed to <code>grep(1)</code> in order to limit which tabs get put
+in the current buffer.  <a href="#fx-tabs">Uses <code>fx-tabs</code></a>.</p>
+<h4 id="mail">:Mail</h4>
+<p><code>:Mail</code> writes a markdown link (using
+<a href="https://github.com/frioux/leatherman#email2json"><code>email2json</code></a> and <a href="mail">one
+of</a> <a href="list">my custom</a> <a href="blogpost">mimetypes</a>) for each email in both of my
+email inboxes.  Can take arguments which will be passed to <code>grep(1)</code> in order to
+limit which messages will get put in the current buffer. <a href="#dump-mail">Uses
+<code>dump-mail</code></a>.</p>
+<h4 id="grab-steal">:Grab :Steal</h4>
+<p>Possibly a plugin itself, but Incubating here.  Usage is currently: <code>:Grab bufferRegex lineRegex</code></p>
+<p>The above will copy any lines matching the <code>lineRegex</code> from any buffers matching
+<code>bufferRegex</code> to the current buffer.  <code>:Steal</code> acts the same, but removes the
+original lines.  Inspired by <a href="vim::t">:t</a> and <a href="vim::m">:m</a>, respectively.</p>
+<h4 id="gspace">g<space></h4>
+<p>Shortcut for clicking links in the current line.  Prefers markdown links but
+will work with raw http or https links.  Will find a link to the right of the
+cursor, but if it can't will try at the beginning of the line.</p>
+<h3 id="tools">Tools</h3>
+<p>The tools here are mostly shell or perl scripts that are generally supporting
+the interfaces above.</p>
+<h4 id="q"><code>q</code></h4>
+<pre><code class="language-bash">$ bin/zine q -sql 'SELECT filename FROM _ WHERE tag == ?' inbox
+content/posts/000-IN.md
+content/posts/todo-3df9f3332087a6dce550743ffbf5c606ac068b6d.md
+content/posts/todo-3f276a704b4e0a8aa0855f677fd04fb6e285bb0d.md
+content/posts/todo-4587e74f1e27a68be5f702aaf263bd30d6f5a8f0.md
+content/posts/todo-96fc6509be13616f0b4de4f9434ae95f88da5b03.md
+</code></pre>
+<p><code>--sql</code> takes a single SQL query.</p>
+<p><code>--formatter</code> takes a string of perl code to evaluate, which will have a <code>%r</code>
+with each row inside of it.</p>
+<p>Any leftover arguments are treated as parameters to bind in the SQL.</p>
+<h5 id="configuration">Configuration</h5>
+<p>Add something like this to <code>config.yaml</code> to configure fields you care about:</p>
+<pre><code class="language-yaml">q:
+  post-facets:
+    - deadline
+    - rating
+</code></pre>
+<h5 id="schema">Schema</h5>
+<p>(<code>$facets_sql</code> is a sql fragment of facets from the Configuration above.)</p>
+<pre><code class="language-sql">CREATE TABLE articles (
+   title,
+   date,
+   guid,
+   filename $facets_sql
+);
+
+CREATE TABLE article_tag ( guid, tag );
+
+CREATE VIEW _ ( guid, title, date, filename, tag $facets ) AS
+SELECT a.guid, title, date, filename, tag
+   $facets_sql
+FROM articles a
+JOIN article_tag at ON a.guid = at.guid;
+</code></pre>
+<p>XXX Add -h</p>
+<p>I have <a href="/posts/a-love-letter-to-plain-text/">blogged</a> <a href="/posts/hugo-unix-vim-integration/#advanced-unix-tools">about this</a> before and use it in at least <a href="https://github.com/frioux/blog">three</a>
+<a href="https://github.com/frioux/clog">other</a> <a href="https://github.com/frioux/drinks">projects</a>.  It is the foundation that allows most of the
+tools below.</p>
+<h4 id="check-oss-cv">check-oss-cv</h4>
+<p>My <a href="/notes/posts/oss-cv/">OSS CV</a> is intended to be a list of all the OSS I've
+ever done that's worth mentioning.  This tool uses
+<a href="https://github.com/ingydotnet/git-hub">git-hub</a> to ensure that I don't have any
+repos (or whatever) that are not linked to.</p>
+<h4 id="check-private">check-private</h4>
+<p>This tool simply exits non-zero if it can find any posts that are private in the
+current corpus.  Used in the public build to ensure nothing sensitive gets
+published.</p>
+<h4 id="dump-mail">dump-mail</h4>
+<p>Combination of <a href="https://github.com/frioux/leatherman#email2json">email2json</a> and
+<a href="https://stedolan.github.io/jq/">jq</a> to produce markdown links of all of my
+inbox.  <a href="#mail">Used by <code>:Mail</code></a>.</p>
+<h4 id="fix-nl">fix-nl</h4>
+<p>Tool to fix newlines and trailing whitespace on all notes in the repository.
+Typically used after editing a file from the Dropbox mobile app.</p>
+<h4 id="fx-tabs">fx-tabs</h4>
+<p>Combination of <a href="https://github.com/frioux/leatherman#dump-mozlz4">dump-mozlz4</a>
+and <a href="https://stedolan.github.io/jq/">jq</a> to produce markdown links of all of my
+open firefox tabs.  <a href="#fxtabs">Used by <code>:FxTabs</code></a>.</p>
+<h4 id="load-rss">load-rss</h4>
+<p>Combination of <a href="https://github.com/frioux/leatherman#rss">rss</a> and <a href="https://www.gnu.org/software/parallel/">GNU
+parallel</a> to fetch my various RSS feeds
+and write the new posts (as markdown links) on stdout.  <a href="#rss">Used by <code>:RSS</code></a>.</p>
+<h4 id="missing-canonical-tag">missing-canonical-tag</h4>
+<p>Prints a list of notes that are lacking any of the canonical tags, namely:</p>
+<ul>
+<li>project</li>
+<li>reference</li>
+<li>incubation</li>
+<li>next-steps</li>
+<li>meta</li>
+<li>waiting</li>
+<li>inbox</li>
+</ul>
+<h4 id="public-build">public-build</h4>
+<p>Builds a public view of the notes; namely, all articles containing a public tag
+and lacking a private tag.</p>
+<h4 id="run-undefer">run-undefer</h4>
+<p><a href="https://github.com/frioux/leatherman#undefer">Undefers</a> any deferred notes;
+<a href="#undefer">used by <code>:Undefer</code></a>, <a href="#rss">and thus <code>:RSS</code></a>.</p>
+<h4 id="tag-files">tag-files</h4>
+<p>Lists all files with a given tag.  <a href="#tagged">Used by <code>:Tagged</code></a> <a href="#in">and thus
+<code>:In</code></a>.</p>
+<h4 id="tags">tags</h4>
+<p>Lists tags ordered by their frequency.</p>
+<p>If you pass an argument, filter tags with the argument as a prefix.</p>
+<h2 id="tutorial">Tutorial</h2>
+<h3 id="example-workflow">Example workflow</h3>
+<ol>
+<li>Have an idea</li>
+<li>Text it to my amygdala</li>
+<li>Run <code>:In</code> at some point</li>
+<li>Idea is in quickfix</li>
+<li>If it's brief, just do it, <code>:Done</code></li>
+<li>If it's simple, add idea to apropriate contextual next-steps, <code>:Done</code></li>
+<li>If it's complicated, start a project with a name, next-steps, reference, etc
+and add one of the next-steps to a contextual next-steps list, <code>:Done</code></li>
+<li>Iterate on stuff in appropriate next-steps list</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags/meta">meta</a></li>
+<li><a href="/notes/tags/reference">reference</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>

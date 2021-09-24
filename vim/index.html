@@ -1,0 +1,127 @@
+<html>
+  <head>
+    <title>Vim - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="Vim" />
+    <meta name="twitter:title" content="Vim" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>Vim</h1>
+<h2 id="next-steps">Next Steps</h2>
+<h2 id="projects">Projects</h2>
+<h2 id="incubating-links-to-read">Incubating Links To Read</h2>
+<ul>
+<li><a href="https://arp242.net/vimlog/">VimLog – a ChangeLog for Vim</a></li>
+<li><a href="https://github.com/myitcv/govim/wiki/vimrc-tips#-tip-triggering-hover-information-via-a-key-mapping">vimrc tips · myitcv/govim Wiki</a></li>
+<li><a href="about:reader?url=https%3A%2F%2Fbegriffs.com%2Fposts%2F2019-07-19-history-use-vim.html">History and effective use of Vim</a></li>
+<li><a href="https://github.com/the9ball/.vim/blob/7138beef974b3510f0dc92b7629ad236ddd39ec9/ftplugin/xxd.vim">.vim/xxd.vim at 7138beef974b3510f0dc92b7629ad236ddd39ec9 · the9ball/.vim</a></li>
+<li><a href="https://www.gnu.org/software/diction/">Style and Diction - GNU Project - Free Software Foundation (FSF)</a></li>
+</ul>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="http://learnvimscriptthehardway.stevelosh.com/">Learn Vimscript the Hard Way</a></li>
+<li><a href="https://castel.dev/post/lecture-notes-1/">How I'm able to take notes in mathematics lectures using LaTeX and Vim | Gilles Castel</a></li>
+</ul>
+<h3 id="ex-ranges">Ex Ranges</h3>
+<ul>
+<li><a href="https://twitter.com/ed1conf/status/945033273125851136?s=09">source</a></li>
+<li>place cursor on line 4</li>
+<li><code>:1,+1p</code> (line 1 through line 5)</li>
+<li><code>:1;+2p</code> (line 1 through line 2, note that this <em>moves the cursor</em>)</li>
+</ul>
+<h3 id="clipboard"><code>'clipboard</code></h3>
+<ul>
+<li><code>:set clipbboard=unnamedplus</code> to make default yank etc go to <code>&quot;+</code></li>
+<li>Handy when doing lots of migrating from one doc to another</li>
+</ul>
+<h3 id="0--1---"><code>&quot;0</code> / <code>&quot;1</code> / <code>&quot;_</code></h3>
+<ul>
+<li><code>&quot;0</code> is populated by yank, not delete.</li>
+<li><code>&quot;1</code> is populated by change or delete <em>unless</em> a register is specified.</li>
+<li><code>&quot;_</code> can be used to disable the population of any register.</li>
+</ul>
+<h3 id="regex-tricks">Regex Tricks</h3>
+<ul>
+<li><code>\V</code> ~~ <code>grep -F</code></li>
+<li><code>%(</code> ~~ perl's <code>(?:</code></li>
+<li><code>\zs</code> / <code>\ze</code> controls match
+<ul>
+<li><code>s/foo \zsbar\ze baz/biff/</code> replaces <code>foo bar baz</code> with <code>foo biff baz</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="q--q"><code>q:</code> / <code>q/</code></h3>
+<ul>
+<li><a href="https://blog.afoolishmanifesto.com/posts/editing-registers-in-vim-regedit/#do-you-hate-command-line-mode">relevant blog post</a></li>
+<li>edit search or command history in command window</li>
+<li>press <code>&lt;C-f&gt;</code> to upgrade to this</li>
+<li>press <code>&lt;Enter&gt;</code> to exit</li>
+</ul>
+<h3 id="t--m"><code>:t</code> / <code>:m</code></h3>
+<ul>
+<li>Allows &quot;remote&quot; copying (ie no moving cursor)</li>
+<li>Examples:</li>
+<li><code>:t .</code> == <code>yyp</code></li>
+<li><code>:1t 2</code> == copy line one to line 3 (or to the end of line 2)</li>
+<li><code>:m</code> does the same thing, except moves instead of copies</li>
+</ul>
+<h3 id="g--vg"><code>:g</code> / <code>:vg</code></h3>
+<ul>
+<li>Runs an ex command for each match</li>
+<li><code>:g/\v^\s*#/delete</code></li>
+<li><code>:vg</code> inverts the match (like <code>grep -v</code>)</li>
+</ul>
+<h3 id="makeprg--errorformat"><code>:makeprg</code> / <code>'errorformat</code></h3>
+<ul>
+<li>Investigate using these for <em>more automation</em></li>
+</ul>
+<h3 id="wild-mode">Wild Mode</h3>
+<p>When tab completing files (etc) use C-N or C-P to go forward or back in the
+list, respectively.</p>
+<h3 id="profiling">Profiling</h3>
+<ul>
+<li><a href="https://blog.afoolishmanifesto.com/posts/vim-debugging/">Vim Debugging</a></li>
+<li><a href="http://vimcasts.org/episodes/profiling-vimscript-performance/">Vim Profiling</a></li>
+</ul>
+<p>Profiling TL;DR:</p>
+<ol>
+<li>Start a profile to a file with <code>:profile start &lt;filename&gt;</code></li>
+<li>Pick what you profile with a pattern: <code>:profile! file {pattern}</code></li>
+</ol>
+<p>Here's how I debugged an issue with <code>:Done</code> being too slow:</p>
+<pre><code class="language-bash">#!/bin/sh
+
+exec vim --cmd 'profile start prof.result' \
+    --cmd 'profile! file *' \
+    -S ~/.vvar/sessions/wnotes \
+    -c 'Done'
+</code></pre>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags/reference">reference</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>

@@ -1,0 +1,548 @@
+<html>
+  <head>
+    <title>Golang - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="Golang" />
+    <meta name="twitter:title" content="Golang" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>Golang</h1>
+<h2 id="porting-from-bash-to-go">Porting from bash to Go</h2>
+<p>My primary methodology when porting from bash to Go is to port a function at a
+time.  I generally pick leaf functions first and iterate &quot;inwards&quot; until major
+functionality is ported.  If we do this well, we should be able to have the
+intermediate functions ported on master without having to port the main
+functionality.</p>
+<p>In theory I could write tests for this as I go, but I am a moster so I don't.  Instead,
+I tend to modify the bash to call the bash version of the function, run it, and then
+call the go version of the function and compare.</p>
+<p>So for example I just ported the <code>generated_go_files_in_packages</code> function.  To
+call the go version I run:</p>
+<pre><code class="language-bash">$ go run ./bin/_gozr generated_go_files_in_packages ./common/go
+</code></pre>
+<p>For the bash version I put something like this after all the functions are
+defined but before any of the main handling code runs:</p>
+<pre><code class="language-bash">generated_go_files_in_packages &quot;$@&quot;
+
+exit 1
+</code></pre>
+<p>From there I can iterate and make sure output matches closely enough to make progress.</p>
+<h2 id="reference">Reference</h2>
+<p>To look up a built in function you can do:</p>
+<pre><code class="language-bash">$ go doc builtin.append
+</code></pre>
+<p>Get assembly of a function:</p>
+<pre><code class="language-bash">$ go tool objdump -S -s main.example ./example
+</code></pre>
+<p>To clarify what's happening in a trace, use the <a href="https://golang.org/pkg/runtime/trace/#hdr-User_annotation">trace api</a></p>
+<p>To track coverage of tests:</p>
+<pre><code class="language-bash">go test -coverprofile=cover.out
+</code></pre>
+<p>Convert to raw bytes:</p>
+<pre><code class="language-golang">package main
+
+import (
+	&quot;fmt&quot;
+
+	&quot;unsafe&quot;
+)
+
+func main() {
+	i := 1
+
+	const sz = unsafe.Sizeof(i)
+	fmt.Println(&quot;raw&quot;, i, &quot;size&quot;, sz)
+
+	name := (*(*[sz]byte)(unsafe.Pointer(&amp;i)))[:]
+
+	fmt.Print(&quot;0b&quot;)
+	for i, b := range name {
+		fmt.Printf(&quot;%08b&quot;, b)
+		if i != len(name)-1 {
+			fmt.Print(&quot; &quot;)
+		}
+	}
+	fmt.Println()
+
+	fmt.Print(&quot;0x&quot;)
+	for _, b := range name {
+		fmt.Printf(&quot;%0x&quot;, b)
+	}
+	fmt.Println()
+}
+</code></pre>
+<h3 id="assembly">Assembly</h3>
+<ul>
+<li><a href="https://9p.io/sys/doc/asm.html">A Manual for the Plan 9 assembler</a></li>
+<li><a href="https://golang.org/doc/asm">A Quick Guide to Go's Assembler - The Go Programming Language</a></li>
+<li><a href="https://goroutines.com/asm">Assembly - goroutines</a></li>
+<li><a href="https://www.ic.unicamp.br/~pannain/mc404/aulas/pdfs/Art%20Of%20Intel%20x86%20Assembly.pdf">The Art of Assembly Language - Art Of Intel x86 Assembly.pdf</a></li>
+<li><a href="https://www.amazon.com/Assembly-Language-Step-Step-Programming-ebook/dp/B004QWZXFA/">Assembly Language Step-by-Step: Programming with Linux 3, Duntemann, Jeff, eBook - Amazon.com</a></li>
+<li><a href="https://www.felixcloutier.com/x86/index.html">x86 and amd64 instruction reference</a></li>
+</ul>
+<p>Example:</p>
+<p>main.go:</p>
+<pre><code class="language-golang">package main
+
+func X(i float64) float64
+</code></pre>
+<p>X.s:</p>
+<pre><code>#include &quot;textflag.h&quot;
+
+// func X(x float64) float64
+TEXT ·X(SB),NOSPLIT,$0
+    FMOVD   x+0(FP),F0
+    FSQRT
+    FMOVDP  F0,ret+8(FP)
+    RET
+</code></pre>
+<h3 id="reflect">reflect</h3>
+<h4 id="value-walk">Value Walk</h4>
+<p>(<a href="https://play.golang.org/p/0YMJffJGQA1">playground</a>)</p>
+<pre><code class="language-golang">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;reflect&quot;
+	&quot;strings&quot;
+)
+func main() {
+	var x struct {
+		Foo string
+		Bar struct {
+			Baz string
+		}
+		Bong [3]int
+		Biff *string
+		Bork map[int]int
+		Ch   chan string
+		Sl   []string
+		F    func(x, y, z int) (w, t, e error)
+	}
+
+	x.Foo = &quot;a&quot;
+	x.Bork = map[int]int{1: 2, 3: 4}
+	x.Sl = []string{&quot;p&quot;, &quot;o&quot;, &quot;i&quot;}
+	valueWalk(x)
+}
+
+func valueWalk(val interface{}) error {
+	return rValueWalk(reflect.ValueOf(val), 1)
+}
+
+func tabs(depth int) {
+	fmt.Print(strings.Repeat(&quot;\t&quot;, depth))
+}
+
+func rValueWalk(rVal reflect.Value, depth int) error {
+	switch rVal.Kind() {
+	case reflect.Invalid:
+		fmt.Print(&quot;invalid&quot;)
+	case reflect.Bool:
+		fmt.Print(rVal.Bool())
+	case reflect.Int:
+		fmt.Print(rVal.Int())
+	case reflect.Int8:
+		fmt.Print(rVal.Int())
+	case reflect.Int16:
+		fmt.Print(rVal.Int())
+	case reflect.Int32:
+		fmt.Print(rVal.Int())
+	case reflect.Int64:
+		fmt.Print(rVal.Int())
+	case reflect.Uint:
+		fmt.Print(rVal.Uint())
+	case reflect.Uint8:
+		fmt.Print(rVal.Uint())
+	case reflect.Uint16:
+		fmt.Print(rVal.Uint())
+	case reflect.Uint32:
+		fmt.Print(rVal.Uint())
+	case reflect.Uint64:
+		fmt.Print(rVal.Uint())
+	case reflect.Uintptr:
+		fmt.Print(rVal.Uint())
+	case reflect.Float32:
+		fmt.Print(rVal.Float())
+	case reflect.Float64:
+		fmt.Print(rVal.Float())
+	case reflect.Complex64:
+		fmt.Print(rVal.Complex())
+	case reflect.Complex128:
+		fmt.Print(rVal.Complex())
+	case reflect.Array:
+		fmt.Print(&quot;[&quot;, rVal.Len(), &quot;]{&quot;)
+		for i := 0; i &lt; rVal.Len(); i++ {
+			rValueWalk(rVal.Index(i), depth+1)
+			if i != rVal.Len()-1 {
+				fmt.Print(&quot;, &quot;)
+			}
+		}
+		fmt.Print(&quot;}&quot;)
+	case reflect.Chan:
+		fmt.Print(&quot;won't pretty print chan contents&quot;)
+	case reflect.Func:
+		fmt.Print(&quot;won't pretty print func contents&quot;)
+	case reflect.Interface:
+		fmt.Print(&quot;won't pretty print interface contents&quot;)
+	case reflect.Map:
+		fmt.Print(&quot;map[&quot;)
+		fmt.Print(&quot;]{&quot;)
+		keys := rVal.MapKeys()
+		for i, k := range keys {
+			v := rVal.MapIndex(k)
+			rValueWalk(k, depth+1)
+			fmt.Print(&quot;: &quot;)
+			rValueWalk(v, depth+1)
+			if i != len(keys)-1 {
+				fmt.Print(&quot;, &quot;)
+			}
+		}
+		fmt.Println(&quot;}&quot;)
+	case reflect.Ptr:
+		fmt.Printf(&quot;%x&quot;, rVal.Pointer())
+	case reflect.Slice:
+		fmt.Print(&quot;[]{&quot;)
+		for i := 0; i &lt; rVal.Len(); i++ {
+			rValueWalk(rVal.Index(i), depth+1)
+			if i != rVal.Len()-1 {
+				fmt.Print(&quot;, &quot;)
+			}
+		}
+		fmt.Println(&quot;}&quot;)
+	case reflect.String:
+		fmt.Printf(&quot;%q&quot;, rVal.String())
+	case reflect.Struct:
+		t := rVal.Type()
+		fmt.Println(&quot;struct {&quot;)
+		fieldCount := rVal.NumField()
+		for i := 0; i &lt; fieldCount; i++ {
+			f := rVal.Field(i)
+			fT := t.Field(i)
+			tabs(depth)
+			fmt.Print(fT.Name, &quot;: &quot;)
+			rValueWalk(f, depth+1)
+			fmt.Println(&quot;,&quot;)
+		}
+		tabs(depth - 1)
+		fmt.Print(&quot;}&quot;)
+	case reflect.UnsafePointer:
+		fmt.Print(&quot;unsafe.Pointer&quot;)
+	default:
+		panic(&quot;unknown Kind&quot;)
+	}
+
+	return nil
+}
+
+</code></pre>
+<h4 id="type-walk">Type Walk</h4>
+<p>(<a href="https://play.golang.org/p/DZS0kG-4dsr">playground</a>)</p>
+<pre><code class="language-golang">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;reflect&quot;
+	&quot;strings&quot;
+)
+
+func main() {
+	var x struct {
+		Foo string
+		Bar struct {
+			Baz string
+		}
+		Bong [3]int
+		Biff *string
+		Bork map[int]int
+		Ch   chan string
+		Sl   []string
+		F    func(x, y, z int) (w, t, e error)
+	}
+
+	typeWalk(x)
+}
+
+func typeWalk(val interface{}) error {
+	return rTypeWalk(reflect.ValueOf(val).Type(), 1)
+}
+
+func tabs(depth int) {
+	fmt.Print(strings.Repeat(&quot;\t&quot;, depth))
+}
+
+func rTypeWalk(rVal reflect.Type, depth int) error {
+	switch rVal.Kind() {
+	case reflect.Invalid:
+		fmt.Print(&quot;invalid&quot;)
+	case reflect.Bool:
+		fmt.Print(&quot;bool&quot;)
+	case reflect.Int:
+		fmt.Print(&quot;int&quot;)
+	case reflect.Int8:
+		fmt.Print(&quot;int8&quot;)
+	case reflect.Int16:
+		fmt.Print(&quot;int16&quot;)
+	case reflect.Int32:
+		fmt.Print(&quot;int32&quot;)
+	case reflect.Int64:
+		fmt.Print(&quot;int64&quot;)
+	case reflect.Uint:
+		fmt.Print(&quot;uint&quot;)
+	case reflect.Uint8:
+		fmt.Print(&quot;uint8&quot;)
+	case reflect.Uint16:
+		fmt.Print(&quot;uint16&quot;)
+	case reflect.Uint32:
+		fmt.Print(&quot;uint32&quot;)
+	case reflect.Uint64:
+		fmt.Print(&quot;uint64&quot;)
+	case reflect.Uintptr:
+		fmt.Print(&quot;uintptr&quot;)
+	case reflect.Float32:
+		fmt.Print(&quot;float32&quot;)
+	case reflect.Float64:
+		fmt.Print(&quot;float64&quot;)
+	case reflect.Complex64:
+		fmt.Print(&quot;complex64&quot;)
+	case reflect.Complex128:
+		fmt.Print(&quot;complex128&quot;)
+	case reflect.Array:
+		fmt.Print(&quot;[&quot;, rVal.Len(), &quot;]&quot;)
+		rTypeWalk(rVal.Elem(), depth+1)
+	case reflect.Chan:
+		fmt.Print(&quot;chan &quot;)
+		rTypeWalk(rVal.Elem(), depth+1)
+	case reflect.Func:
+		fmt.Print(&quot;func (&quot;)
+		for i := 0; i &lt; rVal.NumIn(); i++ {
+			rTypeWalk(rVal.In(i), depth+1)
+			if i != rVal.NumIn()-1 {
+				fmt.Print(&quot;, &quot;)
+			}
+		}
+		fmt.Print(&quot;) (&quot;)
+		for i := 0; i &lt; rVal.NumOut(); i++ {
+			rTypeWalk(rVal.Out(i), depth+1)
+			if i != rVal.NumOut()-1 {
+				fmt.Print(&quot;, &quot;)
+			}
+		}
+		fmt.Print(&quot;)&quot;)
+	case reflect.Interface:
+		fmt.Print(&quot;interface {&quot;)
+		for i := 0; i &lt; rVal.NumMethod(); i++ {
+			m := rVal.Method(i)
+			fmt.Print(m.Name, &quot; &quot;)
+			rTypeWalk(m.Type, depth+1)
+		}
+		fmt.Print(&quot;}&quot;)
+	case reflect.Map:
+		fmt.Print(&quot;map[&quot;)
+		rTypeWalk(rVal.Key(), depth+1)
+		fmt.Print(&quot;]&quot;)
+		rTypeWalk(rVal.Elem(), depth+1)
+	case reflect.Ptr:
+		fmt.Print(&quot;*&quot;)
+		rTypeWalk(rVal.Elem(), depth+1)
+	case reflect.Slice:
+		fmt.Print(&quot;[]&quot;)
+		rTypeWalk(rVal.Elem(), depth+1)
+	case reflect.String:
+		fmt.Print(&quot;string&quot;)
+	case reflect.Struct:
+		fmt.Println(&quot;struct {&quot;)
+		fieldCount := rVal.NumField()
+		for i := 0; i &lt; fieldCount; i++ {
+			f := rVal.Field(i)
+			tabs(depth)
+			fmt.Print(f.Name, &quot; &quot;)
+			rTypeWalk(f.Type, depth+1)
+			fmt.Println(f.Tag)
+		}
+		tabs(depth - 1)
+		fmt.Print(&quot;}&quot;)
+	case reflect.UnsafePointer:
+		fmt.Print(&quot;unsafe.Pointer&quot;)
+	default:
+		panic(&quot;unknown Kind&quot;)
+	}
+
+	return nil
+}
+</code></pre>
+<h3 id="rust--go">rust + go</h3>
+<p>(<a href="https://github.com/jrhy/sandbox/tree/main/rust_from_go">thanks to jeff</a>)</p>
+<pre><code class="language-golang">package main
+
+// int rfg_int();
+// #cgo LDFLAGS: -Loutput/ -lrfg
+import &quot;C&quot;
+import &quot;fmt&quot;
+
+func main() {
+	fmt.Println(&quot;The next line is a number from rfg_int.rs:&quot;)
+	fmt.Println(C.rfg_int())
+}
+</code></pre>
+<pre><code class="language-rust">#[no_mangle]
+pub extern &quot;C&quot; fn rfg_int() -&gt; i32 {
+    42
+}
+</code></pre>
+<pre><code class="language-Make">OUTPUT=output
+
+${OUTPUT}/rust_from_go: ${OUTPUT} ${OUTPUT}/librfg.a main.go
+	go build -o ${OUTPUT}/rust_from_go
+
+${OUTPUT}/librfg.a: rfg_int.rs
+	rustc --crate-type staticlib -o ${OUTPUT}/librfg.a rfg_int.rs
+
+${OUTPUT}:
+	-mkdir ${OUTPUT}
+
+clean:
+	-rm -fr ${OUTPUT}
+
+run: ${OUTPUT}/rust_from_go
+	${OUTPUT}/rust_from_go
+</code></pre>
+<p><a href="http://dominik.honnef.co/posts/2015/06/statically_compiled_go_programs__always__even_with_cgo__using_musl/">related</a></p>
+<h3 id="consuming-a-trace">Consuming a Trace</h3>
+<p><code>go tool trace &lt;path-to-trace&gt;</code></p>
+<h3 id="build-stuff">Build stuff</h3>
+<ul>
+<li><a href="https://golang.org/cmd/go/#hdr-Testing_flags">Testing Flags</a></li>
+<li><code>go doc cmd/link</code>: <code>-X</code></li>
+<li><code>go doc cmd/compile</code>: Compiler directives, <code>-race</code></li>
+<li><code>go doc cmd/go</code> shows (nearly?) all go flags</li>
+</ul>
+<h3 id="links">Links</h3>
+<ul>
+<li><a href="https://github.com/davecheney/gophercon2018-performance-tuning-workshop?files=1">gophercon2018 performance tuning workshop</a></li>
+<li><a href="https://github.com/ardanlabs/gotraining/tree/master/topics/go">Ultimate Go</a></li>
+<li><a href="https://github.com/dvyukov/go-fuzz">dvyukov/go-fuzz: Randomized testing for Go</a></li>
+<li><a href="https://medium.com/@dgryski/go-fuzz-github-com-arolek-ase-3c74d5a3150c">go-fuzz github.com/arolek/ase – Damian Gryski – Medium</a></li>
+<li><a href="https://www.alexedwards.net/blog/an-overview-of-go-tooling">An Overview of Go's Tooling - Alex Edwards</a></li>
+<li><a href="http://www.wingtecher.com/themes/WingTecherResearch/assets/papers/issre19_go.pdf">issre19_go.pdf</a></li>
+<li><a href="https://github.com/wangcong15/go-sanitizer/blob/master/checker.go">go-sanitizer/checker.go at master · wangcong15/go-sanitizer</a></li>
+<li><a href="https://github.com/wangcong15/goassert/blob/master/goassert.go">goassert/goassert.go at master · wangcong15/goassert</a></li>
+<li><a href="https://blog.jbowen.dev/2019/09/using-so_peercred-in-go/">Using SO_PEERCRED in Go · jbowen.dev</a></li>
+<li><a href="https://github.com/goccy/go-reflect">goccy/go-reflect: Zero-allocation reflection library for Go</a></li>
+<li><a href="https://github.com/dave/dst">dave/dst: Decorated Syntax Tree - manipulate Go source with perfect fidelity.</a></li>
+<li><a href="https://github.com/STAMP-project/pitest-descartes">STAMP-project/pitest-descartes: Descartes supports developers to improve their test suites by reporting weak spots in covered code</a></li>
+</ul>
+<h2 id="incubating-links-to-read">Incubating Links to Read</h2>
+<ul>
+<li><a href="https://www.ardanlabs.com/blog/2017/10/the-behavior-of-channels.html">The Behavior Of Channels</a></li>
+<li><a href="https://github.com/golang/go/wiki/CodeReviewComments">Code Review Comments</a></li>
+<li><a href="https://github.com/conprof/conprof">conprof/conprof: Continuous profiling in for pprof compatible profiles.</a></li>
+<li><a href="https://github.com/robfig/cron/blob/master/parser.go#L78">cron/parser.go at master · robfig/cron</a></li>
+<li><a href="https://github.com/dgryski/go-perfbook">dgryski/go-perfbook: Thoughts on Go performance optimization</a></li>
+<li><a href="https://golang.org/doc/effective_go.html">Effective Go</a></li>
+<li><a href="https://jdheyburn.co.uk/posts/extending-gotests-for-strict-error-tests/">Extending Gotests for Strict Error Tests · JDHeyburn</a></li>
+<li><a href="https://yourbasic.org/golang/your-basic-func/">Functional programming in Go [case study] · YourBasic Go</a></li>
+<li><a href="https://www.ardanlabs.com/blog/2018/12/garbage-collection-in-go-part1-semantics.html">Garbage Collection In Go : Part I - Semantics</a></li>
+<li><a href="https://crawshaw.io/blog/xerrors">Go 1.13: xerrors</a></li>
+<li><a href="https://peter.bourgon.org/go-best-practices-2016/">Go Best Practices 2016</a></li>
+<li><a href="https://github.com/golangci/golangci-lint/blob/master/docs/src/docs/contributing/new-linters.mdx#create-a-plugin">golangci-lint/new-linters.mdx at master · golangci/golangci-lint</a></li>
+<li><a href="https://github.com/dgryski/go-perfbook/blob/master/performance.md#writing-and-optimizing-go-code">go-perfbook/performance.md at master · dgryski/go-perfbook</a></li>
+<li><a href="https://www.youtube.com/watch?v=ynoY2xz-F8s">GopherCon 2016: Francesc Campoy - Understanding nil - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=8hQG7QlcLBk">GopherCon 2017: Mitchell Hashimoto - Advanced Testing with Go - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=h0s8CWpIKdg&amp;list=PL2ntRZ1ySWBdDyspRTNBIKES1Y-P__59_&amp;index=14">GopherCon 2019: Chris Hines - Death by 3,000 Timers: Streaming Video-on-Demand for Cable TV - YouTube</a> X</li>
+<li><a href="https://www.youtube.com/watch?v=oE_vm7KeV_E&amp;list=PL2ntRZ1ySWBdDyspRTNBIKES1Y-P__59_&amp;index=22">GopherCon 2019: Daniel Marti - Optimizing Go Code Without a Blindfold - YouTube</a> O</li>
+<li><a href="https://www.youtube.com/watch?v=nok0aYiGiYA&amp;list=PL2ntRZ1ySWBdDyspRTNBIKES1Y-P__59_&amp;index=9">GopherCon 2019: Dave Cheney - Two Go Programs, Three Different Profiling Techniques - YouTube</a> X</li>
+<li><a href="https://www.youtube.com/watch?v=de9cVAx6REA&amp;list=PL2ntRZ1ySWBdDyspRTNBIKES1Y-P__59_&amp;index=21">GopherCon 2019: Jason Keene - Dynamically Instrumenting Go Programs - YouTube</a> O</li>
+<li><a href="https://www.youtube.com/watch?v=JhdL5AkH-AQ&amp;list=PL2ntRZ1ySWBdDyspRTNBIKES1Y-P__59_&amp;index=20">GopherCon 2019: Jonathan Amsterdam - Detecting Incompatible API Changes - YouTube</a> X</li>
+<li><a href="https://www.gophercon-russia.ru/en">GopherCon Russia 2019</a></li>
+<li><a href="https://github.com/gopherdata/gophernotes">gopherdata/gophernotes: The Go kernel for Jupyter notebooks and nteract.</a></li>
+<li><a href="https://github.com/golang/go/blob/master/src/cmd/compile/internal/ssa/README.md">go/README.md at master · golang/go</a></li>
+<li><a href="https://dave.cheney.net/2018/01/08/gos-hidden-pragmas">Go’s hidden #pragmas</a></li>
+<li><a href="https://www.practical-go-lessons.com/">Home - Practical Go Lessons Book</a></li>
+<li><a href="https://dave.cheney.net/2018/05/29/how-the-go-runtime-implements-maps-efficiently-without-generics">How the Go runtime implements maps efficiently (without generics)</a></li>
+<li><a href="https://blog.digitalocean.com/how-to-efficiently-compare-strings-in-go/">How to Efficiently Compare Strings in Go</a></li>
+<li><a href="https://medium.com/@dgryski/idiomatic-go-resources-966535376dba">Idiomatic Go Resources – Damian Gryski – Medium</a></li>
+<li><a href="https://www.youtube.com/watch?v=3yghHvvZQmA&amp;hss_channel=tw-11662692">Meet the Authors – Go Language (Cloud Next '19) - YouTube</a></li>
+<li><a href="https://github.com/mkevac/gopherconrussia2019">mkevac/gopherconrussia2019: Accompanying code for Gophercon Russia 2019 talk about Bitmap Indexes</a></li>
+<li><a href="https://blog.golang.org/package-names">Package names</a></li>
+<li><a href="https://dave.cheney.net/2016/08/20/solid-go-design">SOLID Go Design</a></li>
+<li><a href="https://github.com/spilled-ink/spilld/blob/master/email/msgbuilder/msgbuilder_test.go">spilld/msgbuilder_test.go at master · spilled-ink/spilld</a></li>
+<li><a href="http://staticcheck.io/docs/checks#S1000">staticcheck.io - Go static analysis</a></li>
+<li><a href="https://0x46.net/thoughts/2018/12/29/go-libraries/">Stop writing broken Go libraries</a>: Do not use http.DefaultClient, do not use package vars, do not return interfaces</li>
+<li><a href="https://rakyll.org/style-packages/">Style guideline for Go packages</a></li>
+<li><a href="https://yourbasic.org/golang/advantages-over-java-python/">Why Go? – Key advantages you may have overlooked · YourBasic Go</a></li>
+<li><a href="https://disaev.me/p/writing-useful-go-analysis-linter/">Writing Useful go/analysis Linter · Denis Isaev Blog</a></li>
+<li><a href="https://boyter.org/posts/file-read-challange/">Processing Large Files – Java, Go and 'hitting the wall' | Ben E. C. Boyter</a></li>
+<li><a href="https://github.com/HFO4/gameboy.live">HFO4/gameboy.live: 🕹️ A basic gameboy emulator with terminal &quot;Cloud Gaming&quot; support</a></li>
+<li><a href="https://shipt.tech/who-needs-inheritance-anyway-985a4787e76f">Who Needs Inheritance Anyway? – Shipt Tech</a></li>
+<li><a href="https://an3223.github.io/Living-without-the-modern-browser/">Living without the modern browser – AN3223's Blog – Linux and stuff</a></li>
+<li><a href="http://troubles.md/posts/wasm-is-not-a-stack-machine/">WebAssembly Troubles part 1: WebAssembly Is Not a Stack Machine</a></li>
+<li><a href="https://blog.acolyer.org/2019/05/17/understanding-real-world-concurrency-bugs-in-go/">Understanding real-world concurrency bugs in Go | the morning paper</a></li>
+<li><a href="http://www.go-gazette.com/archive/178371">Test Go with interfaces, no Go type for types, an improved Go playground &amp; more</a></li>
+<li><a href="https://eng.uber.com/optimizing-m3/">Optimizing M3: How Uber Halved Our Metrics Ingestion Latency by (Briefly) Forking the Go Compiler | Uber Engineering Blog</a></li>
+<li><a href="http://www.go-gazette.com/archive/179595">Owning a language: C++ vs Go, simulate CPU in Golang &amp;  a Go + WASM tic-tac-toe bot</a></li>
+<li><a href="https://github.com/golang/go/issues/26492">cmd/go: build: add -static flag · Issue #26492 · golang/go</a></li>
+<li><a href="https://github.com/golang/go/issues/23109">cmd/compile: rewrite escape analysis · Issue #23109 · golang/go</a></li>
+<li><a href="https://github.com/golang/go/issues/14295">cmd/go: go build should be able to write multiple executables · Issue #14295 · golang/go</a></li>
+<li><a href="https://github.com/golang/go/issues/21051">proposal: testing: delay registration of flags until MainStart; add Init for explicit registration · Issue #21051 · golang/go</a></li>
+<li><a href="https://github.com/golang/go/issues/26552">cmd/compile: evaluate map initializers incrementally · Issue #26552 · golang/go</a></li>
+<li><a href="https://github.com/golang/go/issues/28923">encoding/json: speed up the decoding scanner · Issue #28923 · golang/go</a></li>
+<li><a href="http://www.go-gazette.com/archive/180591">Go memory management, TCP keepalive in Go, adopting gRPC &amp; more</a></li>
+<li><a href="https://www.grant.pizza/dissecting-go-binaries/">Dissecting Go Binaries</a></li>
+<li><strong><a href="https://arslan.io/2017/09/14/the-ultimate-guide-to-writing-a-go-tool/">The ultimate guide to writing a Go tool · Fatih Arslan</a></strong></li>
+<li><strong><a href="https://arslan.io/2019/06/13/using-go-analysis-to-write-a-custom-linter/">Using go/analysis to write a custom linter · Fatih Arslan</a></strong></li>
+<li><strong><a href="https://godoc.org/golang.org/x/tools/go/analysis">analysis - GoDoc</a></strong></li>
+<li><a href="https://github.com/go-delve/delve/blob/master/Documentation/cli/getting_started.md">delve/getting_started.md at master · go-delve/delve</a></li>
+<li><a href="https://github.com/google/starlark-go">google/starlark-go: Starlark in Go: the Starlark configuration language, implemented in Go</a></li>
+<li><a href="https://github.com/dgryski/go-interp">dgryski/go-interp: Interpolation search</a></li>
+<li><a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html#close_http_resp_body">50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs</a></li>
+<li><a href="https://blog.filippo.io/efficient-go-apis-with-the-inliner/">Efficient Go APIs with the mid-stack inliner</a></li>
+<li><a href="https://andrewpillar.com/programming/2019/07/13/orms-and-query-building-in-go/">ORMs and Query Building in Go - andrew pillar</a></li>
+<li><a href="https://eli.thegreenplace.net/2019/to-orm-or-not-to-orm/">To ORM or not to ORM - Eli Bendersky's website</a></li>
+<li><a href="https://commandcenter.blogspot.com/2014/01/self-referential-functions-and-design.html">Self-referential functions and the design of options</a></li>
+<li><a href="https://github.com/andrewpillar/query/blob/master/query_test.go">query/query_test.go at master · andrewpillar/query</a></li>
+<li><a href="https://twitter.com/mbmcloughlin/status/1154858209930182656?s=09">Michael McLoughlin on Twitter: &quot;It was a privilege to speak at Gophercon yesterday about assembly generation in Go. https://t.co/YQdbQ1JpMu&quot; / Twitter</a></li>
+<li><a href="https://twitter.com/dan_ballard/status/1152346004173099009?s=09">Dan Ballard 🌹🏴 on Twitter: &quot;One of the best things I did was make our integration tests count goroutines throughout execution and fail if they weren't all cleaned up It's also one of the most annoying things ;) Tracking down a thread leak before I can submit this PR around app client/service reload&quot; / Twitter</a></li>
+<li><a href="https://github.com/felixge/fgprof">felixge/fgprof: 🚀 fgprof is a sampling Go profiler that allows you to analyze On-CPU as well as Off-CPU (e.g. I/O) time together.</a></li>
+<li><a href="https://github.com/dgryski/go-perfbook">dgryski/go-perfbook: Thoughts on Go performance optimization</a></li>
+<li><a href="https://github.com/cockroachdb/errors">cockroachdb/errors: Go error library with error portability over the network</a></li>
+<li><a href="https://docs.google.com/presentation/d/1srgZm3FQ4FaJ7T0clq3C-iN9EXszdFDK5fjwuh77izo/mobilepresent#slide=id.p">GopherCon 2020 - Error handling and pitfalls in distributed Go apps - Google Slides</a></li>
+<li><a href="https://pkg.go.dev/github.com/charmbracelet/bubbletea">tea package · pkg.go.dev</a></li>
+</ul>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/notes/posts/learning-days/">learning days</a></li>
+<li><a href="/notes/posts/go-error-injector/">Go Error Injector</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/tech">tech</a></li>
+<li><a href="/notes/tags/golang">golang</a></li>
+<li><a href="/notes/tags/incubation">incubation</a></li>
+<li><a href="/notes/tags/reference">reference</a></li>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>

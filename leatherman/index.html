@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <title>Leatherman - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="Leatherman" />
+    <meta name="twitter:title" content="Leatherman" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>Leatherman</h1>
+<p><a href="https://github.com/frioux/leatherman">Leatherman</a> is a project to migrate
+scripts from <a href="https://github.com/frioux/dotfiles">my dotfiles</a> to golang.  The
+first candidates are scripts written in Perl or Python that have non-core deps,
+as those tend to be a hassle.  On the other hand they seem to be the least used.</p>
+<p>Any standalone go things I use should be migrated to this framework (for example
+weird AWS things that I optimize in go.)</p>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li>more online docs (notes manual, eg)</li>
+<li>status: import history of unproductive and make default component of status?</li>
+<li>Convert mail-picture</li>
+<li>add context support wherever context.TODO shows up</li>
+</ul>
+<h2 id="githubcomfriouxleathermanpkgconfiguration"><code>github.com/frioux/leatherman/pkg/configuration</code></h2>
+<pre><code class="language-golang">var config Config
+configuration.Load(&amp;config, configuration.In{
+        Environ: os.Environ(),
+        Args: os.Args(), // os.Args()[1:] ?
+})
+
+type LoadFromEnviron interface {
+        LoadFromEnviron([]string) error
+}
+
+type LoadFromArgs interface {
+        LoadFromArgs([]string) error
+}
+
+type FieldToArg interface {
+        FieldToArg([]string) string
+}
+
+type FieldToEnv interface {
+        FieldToArg([]string) string
+}
+
+type SetField interface {
+        SetField(string, string) error
+}
+
+type Set interface {
+        Set(string) error
+}
+</code></pre>
+<h3 id="notes-mdlua">notes: mdlua</h3>
+<pre><code>type indentAssist interface {
+  parse(*string) bool
+  next()  string
+}
+</code></pre>
+<ul>
+<li>nested lists support</li>
+<li>json header</li>
+<li>sorting support</li>
+<li>form entry</li>
+</ul>
+<h3 id="eventdb">eventdb</h3>
+<p>The idea here is a little TSDB backed by SQLite that lets local applications
+(shell scripts really) do things more intelligently than &quot;just failed&quot; or &quot;just
+succeeded.&quot;  I'd make the schema very simple, something like:</p>
+<pre><code class="language-sql">CREATE TABLE events ( timestamp DEFAULT NOW(), eventname IS NOT NULL, success, extra )
+</code></pre>
+<p>The tool would have a relatively simple interface like:</p>
+<pre><code class="language-bash">$ eventdb insert -eventname marble -success true
+</code></pre>
+<p>By default timestamp is <code>NOW()</code> and extra is <code>NULL</code>.</p>
+<p>Later on you could do something like:</p>
+<pre><code class="language-bash">$ eventdb query -eventname marble -before 'NOW() - 1h' # seems sketchy
+</code></pre>
+<p>Aside: allowing raw SQL access seems sketchy, but creating a good abstraction
+seems hard.  Probably start with raw SQL with an eye to replace?</p>
+<h2 id="branches">Branches</h2>
+<ul>
+<li>branch debug-vim add's a tool to debug vim plugins</li>
+</ul>
+<h3 id="draw">draw</h3>
+<h4 id="discord-integration">discord integration</h4>
+<ul>
+<li>Add basic tests for code discovery</li>
+</ul>
+<h3 id="ical-parser">ical parser</h3>
+<h4 id="stashed-links">Stashed Links</h4>
+<ul>
+<li><a href="https://github.com/hackebrot/turtle">hackebrot/turtle: Emojis for Go 😄🐢🚀</a></li>
+<li><a href="https://github.com/arp242/uni">arp242/uni: Query the Unicode database from the commandline, with good support for emojis</a></li>
+<li><a href="https://github.com/ribice/dt/blob/master/README.md">dt/README.md at master · ribice/dt</a></li>
+<li><a href="https://github.com/apognu/gocal/blob/6353b7dd82da414e72b45466dbfc9c2509e966e7/rrule.go">gocal/rrule.go at 6353b7dd82da414e72b45466dbfc9c2509e966e7 · apognu/gocal</a></li>
+<li><a href="https://tools.ietf.org/html/rfc5545#section-3.3.10">RFC 5545 - Internet Calendaring and Scheduling Core Object Specification (iCalendar)</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags/project">project</a></li>
+<li><a href="/notes/tags/oss">oss</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>

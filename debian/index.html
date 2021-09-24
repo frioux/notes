@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <title>Debian - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="Debian" />
+    <meta name="twitter:title" content="Debian" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>Debian</h1>
+<ul>
+<li>Why is a package installed: <code>aptitude why $package</code></li>
+<li>What versions could be / are installed: <code>apt-cache policy $package</code></li>
+<li>List contents of package: <code>dpkg -L $package</code></li>
+<li>List contents of package on disk: <code>dpkg-deb --contents $deb</code></li>
+<li>Extract contents of package on disk: <code>dpkg-deb --raw-extract $deb t'$dir</code></li>
+<li>Leave out a file from a package: <code>dpkg-divert --divert /etc/init/filebeat.conf --rename /etc/init/filebeat.disabled</code></li>
+<li>Install a specific version of a package: <code>apt-get install $package=$version</code></li>
+</ul>
+<h2 id="how-to-pull-some-packages-from-sid">How to Pull Some Packages From Sid</h2>
+<p>(h/t Ryan Voots)</p>
+<p><code>sources.list</code>:</p>
+<pre><code>deb http://ftp.us.debian.org/debian/ jessie main contrib non-free
+deb-src http://ftp.us.debian.org/debian/ jessie main contrib non-free
+
+deb http://security.debian.org/ jessie/updates main contrib non-free
+deb-src http://security.debian.org/ jessie/updates main contrib non-free
+
+deb http://ftp.us.debian.org/debian/ jessie-updates main contrib non-free
+deb-src http://ftp.us.debian.org/debian/ jessie-updates main contrib non-free
+
+deb http://ftp.us.debian.org/debian/ jessie-backports main contrib non-free
+deb-src http://ftp.us.debian.org/debian/ jessie-backports main contrib non-free
+
+#deb http://http.us.debian.org/debian/ sid main contrib non-free
+#deb-src http://http.us.debian.org/debian/ sid main contrib non-free
+deb http://repo.varnish-cache.org/debian/ jessie varnish-3.0
+</code></pre>
+<p><code>/etc/apt/preferences</code>:</p>
+<pre><code>package: *
+pin: release n=jessie
+pin-Priority: 1000
+
+package: *
+pin: release n=jessie-updates
+pin-Priority: 1001
+
+package: *
+pin: release n=jessie-backports
+pin-Priority: 1002
+
+package: *
+pin: release n=sid
+pin-Priority: 100
+</code></pre>
+<p><code>/etc/apt/preferences.d/git</code>:</p>
+<pre><code>package: git git-man git-daemon-run gitweb git-doc git-el git-email git-gui gitk git-arch git-cvs git-mediawiki git-svn
+pin: release n=sid
+pin-Priority: 1010
+</code></pre>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags/reference">reference</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>

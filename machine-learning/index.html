@@ -1,0 +1,457 @@
+<html>
+  <head>
+    <title>Machine learning - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="Machine learning" />
+    <meta name="twitter:title" content="Machine learning" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>Machine learning</h1>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li><a href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/">The Unreasonable Effectiveness of Recurrent Neural Networks</a></li>
+<li><a href="http://cs231n.stanford.edu/">Stanford University CS231n: Convolutional Neural Networks for Visual Recognition</a></li>
+<li><a href="https://twitter.com/chipro/status/1157772112876060672">Chip Huyen on Twitter: &quot;This thread is a combination of 10 free online courses on machine learning that I find the most helpful. They should be taken in order.&quot; / Twitter</a>
+<ul>
+<li><a href="https://online.stanford.edu/courses/gse-yprobstat-probability-and-statistics">Probability and Statistics | Stanford Online</a></li>
+<li><a href="https://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/">Linear Algebra | Mathematics | MIT OpenCourseWare</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PLzUTmXVwsnXod6WNdg57Yc3zFx_f-RYsq">CS231N 2017 - YouTube</a></li>
+<li><a href="https://course.fast.ai/">Practical Deep Learning for Coders, v3 | fast.ai course v3</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PLU40WL8Ol94IJzQtileLTqGZuXtGlLMP_">CS224N Natural Language Processing with Deep Learning - YouTube</a></li>
+<li><a href="https://www.coursera.org/specializations/probabilistic-graphical-models">Probabilistic Graphical Models | Coursera</a></li>
+<li><a href="https://www.youtube.com/watch?v=2pWv7GOvuf0&amp;list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ">RL Course by David Silver - Lecture 1: Introduction to Reinforcement Learning - YouTube</a></li>
+<li><a href="https://fullstackdeeplearning.com/march2019">Full Stack Deep Learning</a></li>
+<li><a href="https://www.coursera.org/learn/competitive-data-science">How to Win a Data Science Competition: Learn from Top Kagglers | Coursera</a></li>
+</ul>
+</li>
+<li><a href="https://developers.google.com/machine-learning/crash-course/">Take this class</a></li>
+<li><a href="http://deeplearning.ai">Take other classes</a></li>
+<li>Read Deep Learning Book</li>
+</ul>
+<p><strong>Note:</strong> These notes were started in the middle of the class, so they are
+likely not of much use to others.</p>
+<h2 id="evaluating-a-hypothesis">Evaluating a Hypothesis</h2>
+<p>Instead of using all data for training, split data into three parts:</p>
+<ol>
+<li>~60% for training.</li>
+<li>~20% for validation.</li>
+<li>~20% for testing.</li>
+</ol>
+<p>Use the training data to train your hypotheses, then use validation to select
+the winning hypothesis, then use testing the validate that the hypothesis.</p>
+<p>If the cost of the training and the validation are both high (and basically
+equal,) you have <em>high bias</em> (<em>underfit</em>.)</p>
+<p>If the cost of the training is low but the cost of the validation is
+significantly higher you have <em>high variance</em> (<em>overfit</em>.)</p>
+<p>This can be seen if you plot the cost of the training data and the cost of the
+validation data against the degree of polynomial.</p>
+<h2 id="regularization-and-bias--variance">Regularization and Bias / Variance</h2>
+<p>Define the cost function to include the regularization parameter; leave it off
+for the cost for training, validation, and testing.</p>
+<p>For various lambdas (0, 0.01, 0.02, 0.04, 0.08 .. 10~) minimize the cost
+function with the training cost function.  Select the minimized theta that has
+the lowest error on the unregularized cost function against the validation set.</p>
+<p>Finally, apply the test cost function to see how well theta generalizes.</p>
+<h2 id="learning-curves">Learning Curves</h2>
+<p>Pick a subset of your training data starting at m=1 and going to the size of the
+training data.  As m increases you will find that you can no longer fit each
+data point perfectly and that error will increase.</p>
+<p>On the other hand, when starting with m=1 with the <em>cross validation</em> set, the
+lower the amount of data used the <em>higher</em> the error will be.</p>
+<h3 id="high-bias-aka-underfit">High Bias (aka underfit)</h3>
+<p>When plotting a learning curve in a high bias situation, you will find that
+fairly quickly your curve flattens out, since your curve is just poorly fit in
+general.  Unlike in a more optimal situation, when the bias is high, the
+training and cross validation errors will end up being very close or the same.</p>
+<p>Relatively high error.</p>
+<blockquote>
+<p>If a learning algorithm is suffering from high bias, getting more training
+data won't really help.</p>
+</blockquote>
+<h3 id="high-variance-aka-overfit">High Variance (aka overfit)</h3>
+<p>When plotting a learning curve in a high variance situation, you will find that
+error is zero for training data, but high for cross validation data.</p>
+<p>Large gap between training error and cross validation error.</p>
+<blockquote>
+<p>If a learning algorithm is suffering from high variance, getting more training
+data is likely to help.</p>
+</blockquote>
+<h2 id="debugging-a-learning-algorithm">Debugging a Learning Algorithm</h2>
+<p>You have implemented a learning algorithm but it is found wanting.  Here are
+some options and why you might use then:</p>
+<ul>
+<li>
+<p>Have high variance?</p>
+<ul>
+<li>Get more training data</li>
+<li>Try fewer features</li>
+<li>Try increasing λ</li>
+</ul>
+</li>
+<li>
+<p>Have high bias?</p>
+<ul>
+<li>Get additional features</li>
+<li>Try adding polynomial features</li>
+<li>Try increasing λ</li>
+</ul>
+</li>
+<li>
+<p>Small neural networks (few hidden layers, few nodes)</p>
+<ul>
+<li>More prone to high bias</li>
+<li>Computationally cheaper</li>
+</ul>
+</li>
+<li>
+<p>Large neural networks (many hidden layers, many nodes)</p>
+<ul>
+<li>More prone to high variance</li>
+<li>Computationally expensive</li>
+<li>Use regularization to handle overfit</li>
+<li>For picking hidden layer count, use the normal train / cross validation
+checking</li>
+</ul>
+</li>
+</ul>
+<h2 id="getting-started-on-a-machine-learning-implementation">Getting Started on a Machine Learning implementation</h2>
+<ol>
+<li>
+<p>Implement the most basic version that could work, in 24 hours our less, to
+build out the tooling to test a cross validation set.</p>
+</li>
+<li>
+<p>Plot learning curves to decide if more data, more features, will help.</p>
+</li>
+<li>
+<p>Use Error Analysis to example the individual data points that the algorithm
+had high error and see if there are any systematic errors.</p>
+</li>
+</ol>
+<p>Critically, you need a way to get a number (3% error, for example) so that you
+can easily compare different varieties of your algorithm (like with or without
+stemming, case sensitive or case insensitive, etc.)</p>
+<h2 id="error-analysis-for-skewed-classes">Error Analysis for Skewed Classes</h2>
+<p>You might think that you are a golden god because you have implemented an
+algorithm that gets the right answer for a gigantic data set of medical data,
+classifying cancer.  Concretely it might be right 99% of the time.  The bad news
+is that because the occurance of cancer in the data set is so low (%0.5) it's
+actually <em>worse</em> than assuming literally no one has cancer.  Woops.</p>
+<p>Guess: scale error by ratio?  Maybe have error per class?</p>
+<h3 id="precisionrecall">Precision/Recall</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Cancerous</th>
+<th>Noncancerous</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Predicted Cancerous</td>
+<td>true pos</td>
+<td>false pos</td>
+</tr>
+<tr>
+<td>Predicted Noncancerous</td>
+<td>false neg</td>
+<td>true neg</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Precision</strong>: Of all the patients where we guessed they have cancer, what fraction
+actually do? For example if when we decided &quot;cancer&quot; and were always correct,
+but missed half of the cancer patients, we'd have a 100% precision.</p>
+<pre><code>precision =
+  true positives / predicted positives =
+  true positives / (true positives + false positives)
+</code></pre>
+<p><strong>Recall</strong>: Of all of the cancer patients, what fraction did we decide correctly?
+In the example above we'd have a 50% recall.</p>
+<pre><code>recall =
+  true positives / actual positives =
+  true positives / (true positives + false negatives)
+</code></pre>
+<p>Note that this is specifically set such that the rare class is the true case.</p>
+<h2 id="how-to-control-the-precisionrecall-tradeoff">How to control the Precision/Recall Tradeoff</h2>
+<p>You can increase precision by increasing the requirement for y to be true.  So
+normally you say y is true if the hypothesis is over 0.5; instead you might
+increaes the requirement so that the hypothesis has to be over 0.7.  This will
+increase precision, but decrease recall.</p>
+<h2 id="f-score-to-compare-precisionrecall-values">F score to compare Precision/Recall values</h2>
+<pre><code>2 * P * R / (P + R)
+</code></pre>
+<h2 id="does-having-lots-of-data-help">Does having &quot;lots&quot; of data help?</h2>
+<ol>
+<li>
+<p>Assume that we have enough feature data (ie if a human expert looked at the
+sample, they would be able confidently make a correct decision)</p>
+</li>
+<li>
+<p>Use a &quot;low bias&quot; algorithm via many parameters; like a neural network with
+many hidden layers or logistic/linear regression with many features.</p>
+</li>
+<li>
+<p>A large dataset is very unlikely to overfit.</p>
+</li>
+</ol>
+<h2 id="support-vector-machines">Support Vector Machines</h2>
+<p>Basically, instead of the complicated function that logistic regression is based
+on, SVM uses three or four basic line segments, thus making it <em>much</em> easier to
+compute.</p>
+<p>Logistic Regression Cost Function:
+<img src="../../img/machine-learning-lin-reg.png" alt="cost function"></p>
+<p>SVM Cost Function:
+<img src="../../img/machine-learning-svm.png" alt="cost function"></p>
+<p>SVM Hypothesis:
+<img src="../../img/machine-learning-svm-hyp.png" alt="cost function"></p>
+<p>As a side effect of the cost function, SVM have large margins, picking
+boundaries that increase the &quot;space&quot; between samples.</p>
+<h2 id="kernels">Kernels</h2>
+<p>Given x, compute new features depending on proximity to landmarks.</p>
+<p>There are various kernels, the one defined in class is called the Gaussian
+kernel.  They are all &quot;similarity functions.&quot;</p>
+<p>Each landmark maps to a feature.</p>
+<h2 id="landmarks">Landmarks</h2>
+<p>Place a landmark at each training data location.</p>
+<h2 id="svm-parameters">SVM Parameters</h2>
+<pre><code>C = 1 / λ
+</code></pre>
+<ul>
+<li>C
+<ul>
+<li>Large C: Lower bias / High variance</li>
+<li>Small C: Lower variance / High bias</li>
+</ul>
+</li>
+<li>Choice of kernel (similarity function)
+<ul>
+<li>No kernel (linear); for when n is large, m is small</li>
+<li>Gaussian kernel; for when n is small, and/or m is large
+<ul>
+<li>Choose σ²
+<ul>
+<li>Large σ²: Features vary more smoothly, Higher bias, lower variance.</li>
+<li>Small σ²: Features vary more abruptly, Higher variance, lower bias.</li>
+</ul>
+</li>
+<li>Must performe feature scaling <em>before</em> using Gaussian kernel.</li>
+</ul>
+</li>
+<li>You may need to implement the kernel function yourself.</li>
+</ul>
+</li>
+</ul>
+<p>Not all similarity functions are kernels.</p>
+<p>Other kernels (much more rare:)</p>
+<ul>
+<li>Polynomial</li>
+<li>String</li>
+<li>chi-squared</li>
+<li>histogram</li>
+<li>intersection</li>
+</ul>
+<h2 id="multi-class-classification">Multi-class Classification</h2>
+<p>Typically built in, otherwise implement one-vs-all classification.</p>
+<h2 id="logistic-regression-vs-svm">Logistic Regression vs SVM</h2>
+<p>When there are many features (n) compared to the amount of samples (m), use
+logistic regression or SVM without a kernel.  Like if n &gt;= m, n = 10k, m =
+10..1k.</p>
+<p>When there are few features (1..1000) and an intermediate number of samples
+(10..10,000), use SVM with Gaussian kernel.</p>
+<p>When there are few features (1..1000) and many samples (50,000+) create or add
+more features, then use logistic regression or SVM without a kernel, otherwise
+it will be too slow.</p>
+<p>Neural network works well for all of the above, but is slower to train.</p>
+<h2 id="principle-component-analysis">Principle Component Analysis</h2>
+<p>Always perform mean normalization, and probably perform feature scaling.</p>
+<pre><code>sigma = (1/m) * X' * X;
+[U,S,V] = svd(sigma);
+Ureduce = U(:,1:k);
+z = Ureduce'*x;
+</code></pre>
+<ul>
+<li>PCA can be used to speed up Machine Learning</li>
+<li>PCA <em>cannot</em> be used to avoid overfitting</li>
+</ul>
+<h2 id="anomaly-detection-algorithm">Anomaly Detection Algorithm</h2>
+<ol>
+<li>Choose feature <code>x_i</code> that you think might be indicative of anomalous examples.</li>
+<li>Fit parameters μ₁,...,μₙ,σ₁²,...,σₙ²</li>
+</ol>
+<pre><code>u_j = 1/m * sum of the examples of feature j
+sigma_j = 1/m * sum of (x_j - u_j)^2
+</code></pre>
+<ol start="3">
+<li>Given new example x, compute <code>p(x)</code></li>
+</ol>
+<h2 id="algorithm-evaluation">Algorithm Evaluation</h2>
+<p>Possible evaluation metrics:</p>
+<ul>
+<li>True positive, false positive, true negative, false negative</li>
+<li>Precision/Recall</li>
+<li>F-1 Score</li>
+</ul>
+<p>Use CV to choose ε.</p>
+<h2 id="anomaly-detection-vs-supervised-learning">Anomaly Detection vs Supervised Learning</h2>
+<p>Anomaly Detection:</p>
+<ul>
+<li>Very small number of positive examples (0-20)</li>
+<li>Large number of negative examples.</li>
+<li>Many different &quot;types&quot; of anomalies.</li>
+<li>Future anomalies may look nothing like any of the examples we've seen so far.</li>
+<li>Examples
+<ul>
+<li>Fraud Detection</li>
+<li>Manufacturing</li>
+<li>Monitoring machines in a data center</li>
+</ul>
+</li>
+</ul>
+<p>Supervised Learning</p>
+<ul>
+<li>Large number of positive and negative examples.</li>
+<li>Examples
+<ul>
+<li>Spam Classification</li>
+<li>Weather prediction</li>
+<li>Cancer Classification</li>
+</ul>
+</li>
+</ul>
+<h2 id="non-gaussian-features">Non-gaussian features</h2>
+<ul>
+<li>Maybe use a transformation (like <code>log(x)</code>, <code>log(x+1)</code>, <code>sqrt(x)</code>) to make it
+normal</li>
+<li>Plot histogram, play around</li>
+</ul>
+<h2 id="error-analysis-for-anomaly-detection">Error Analysis for Anomaly Detection</h2>
+<p>Want <code>p(x)</code> large for normal examples, small for anomalous examples.</p>
+<p>Most common problem:</p>
+<p><code>p(x)</code> is comparable for normal and anomalous examples.</p>
+<h2 id="monitoring-computers-in-a-data-center">Monitoring computers in a data center</h2>
+<p>Choose features that might take on unusually large or small values in the event
+of an anomaly:</p>
+<ul>
+<li>memory use</li>
+<li>number of disc accesses/sec</li>
+<li>cpu load</li>
+<li>network traffic</li>
+<li>if cpu load and network traffic are linked, maybe do
+cpu load / network traffic</li>
+</ul>
+<h2 id="multivariate-gaussian-distribution">Multivariate Gaussian distribution</h2>
+<p>Don't model probabilities separately, model p(x) all in one go.</p>
+<h2 id="original-vs-multivariate">Original vs Multivariate</h2>
+<p>Multivariate automatically captures correlations between features.  m must be &gt;
+n, or else the sum is non invertable.</p>
+<p>For original you have to manually create features to capture anomalies where x
+and y take unusual combinations of values (like <code>x3 = x1/x2</code>.)  Original is
+computationally cheaper. (works with n=10,000 or n=100,000, and when m is small)</p>
+<h2 id="recommendation-systems">Recommendation Systems</h2>
+<p><code>r(i,j) = 1</code> if user j has rated movie i</p>
+<p><code>y(i,j) = rating</code> by user j on movie i</p>
+<p><code>θ(j) = parameter vector for user j</code></p>
+<p><code>x(i) = feature vector for movie i</code></p>
+<p>For user j, movie i, predicted rating: <code>(θ(j)'(x(i)))</code></p>
+<p><code>m(j) = no of movies rated by user j</code></p>
+<h2 id="recommendation-systems-optimization-objective">Recommendation Systems Optimization Objective</h2>
+<p><img src="../../img/machine-learning-rec-sys-opt-obj.png" alt="objective"></p>
+<h2 id="recommendation-systems-gradient-descent">Recommendation Systems Gradient Descent</h2>
+<p><img src="../../img/machine-learning-rec-sys-grad-desc.png" alt="gradient descent"></p>
+<h2 id="recommendation-systems-colaborative-filtering">Recommendation Systems Colaborative Filtering</h2>
+<p>Treat features as unknowns, but ask users for their personal feature ratings
+(aka θ(j).</p>
+<h2 id="recommendation-systems-optimization-algorithm">Recommendation Systems Optimization Algorithm</h2>
+<p><img src="../../img/machine-learning-rec-sys-opt-alg.png" alt="optimization algorithm"></p>
+<p><img src="../../img/machine-learning-rec-sys-opt-alg-2.png" alt="optimization algorithm 2"></p>
+<p>Now estimate movie preferences, then improve human preferences, recursively.</p>
+<h2 id="collaborative-filtering-algorithm">Collaborative filtering algorithm</h2>
+<ol>
+<li>Initialize x(1),...,x(n_m),θ(1),...,θ(n_u) to small random values.</li>
+<li>Minimize J(x(1),...,x(n_m),θ(1),...,θ(n_u)) using gradient descent (or
+something else); Eg. for <img src="../../img/machine-learning-col-filt-alg.png" alt="collaborative filtering algorithm"></li>
+<li>For a user with parameters θ and a movie with (learned) features x, predict
+a star rating of θ'x</li>
+</ol>
+<h2 id="colaborative-filtering-aka-low-rank-matrix-factorization">Colaborative Filtering aka Low Rank Matrix Factorization</h2>
+<p><img src="../../img/machine-learning-low-rank.png" alt="low rank"></p>
+<h2 id="to-find-related-movies">To find related movies</h2>
+<p>A small <code>||x(i) - x(j)||</code> implies similar movies</p>
+<h2 id="for-users-who-have-not-rated-any-movies">For users who have not rated any movies</h2>
+<p>Use mean normalization so that a &quot;zero&quot; users likes movies based on the average
+rating.</p>
+<h2 id="large-scale-machine-learning">Large Scale Machine Learning</h2>
+<ul>
+<li>Use <a href="#learning-curves">Learning Curves</a>, plotting against m, to discover if
+adding data will help.</li>
+</ul>
+<h2 id="stochastic-gradient-descent">Stochastic Gradient Descent</h2>
+<ul>
+<li>Shuffle data set</li>
+<li>Take steps based on each example, instead of all examples.</li>
+<li>calculate cost <strong>before updating θ</strong>
+<ul>
+<li>Every 1000 interations, &quot;plot&quot; average cost, to inform user of convergence</li>
+</ul>
+</li>
+<li>To force convergence, decrease α each iteration</li>
+</ul>
+<h2 id="mini-batch-gradient-descent">Mini-Batch Gradient Descent</h2>
+<ul>
+<li>Pick mini-batch size b (2-100 is typical.)</li>
+<li>Perform gradient descent update using b examples.</li>
+<li>This will outperform Stochastic GD if you have good vectorization.</li>
+</ul>
+<h2 id="online-learning">Online Learning</h2>
+<ul>
+<li>Learn from one example at a time, and throw it away without retraining</li>
+<li>Can adapt to changing user preference</li>
+<li>Might use this to build a search engine, sorting by predicted CTR</li>
+</ul>
+<h2 id="map-reduce">Map Reduce</h2>
+<ul>
+<li>Basically do batch gradient descent, but divide up summing per machine</li>
+</ul>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://metacpan.org/pod/AI::FANN">AI::FANN - Perl wrapper for the Fast Artificial Neural Network library - metacpan.org</a></li>
+<li><a href="http://leenissen.dk/fann/wp/">Fast Artificial Neural Network Library (FANN)</a></li>
+<li><a href="http://playground.tensorflow.org/">A Neural Network Playground</a></li>
+<li><a href="https://www.youtube.com/watch?v=2pWv7GOvuf0&amp;list=PL5X3mDkKaJrL42i_jhE4N-p6E2Ol62Ofa">RL Course by David Silver - Lecture 1: Introduction to Reinforcement Learning - YouTube</a></li>
+<li><a href="http://webdocs.cs.ualberta.ca/~sutton/book/the-book.html">Sutton &amp; Barto Book: Reinforcement Learning: An Introduction</a></li>
+<li><a href="http://www.deeplearningbook.org/">Deep Learning</a></li>
+<li><a href="https://www.deeplearning.ai/">Deep Learning Classes</a></li>
+<li><a href="https://cs.brown.edu/~dabel/blog/posts/misc/nips_2017.pdf">NIPS 2017 Notes</a></li>
+<li><a href="https://www.kdnuggets.com/2017/12/ng-computer-vision-11-lessons-learnied.html">Computer Vision Lessons Learned</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags/reference">reference</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>

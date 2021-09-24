@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title>splinter - fREW Schmidt's Notes</title>
+    <meta property="og:title" content="splinter" />
+    <meta name="twitter:title" content="splinter" />
+    <meta name="author" content="Arthur Axel fREW Schmidt"/>
+    <link href="/notes/img/fav.png" rel='icon' type='image/x-icon'/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@frioux" />
+    <meta name="twitter:creator" content="@frioux" />
+    <meta property="og:url" content="{ { .URL } }" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{ { .Site.Title } }" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="/notes/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-md-12">
+           <h1>splinter</h1>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://github.com/golangci/golangci-lint">golangci/golangci-lint: Linters Runner for Go. 5x faster than gometalinter. Nice colored output. Can report only new issues. Fewer false-positives. Yaml/toml config.</a></li>
+<li><a href="https://github.com/golangci/golangci-lint/blob/master/pkg/config/config.go#L309-L313">golangci-lint/config.go at master · golangci/golangci-lint</a></li>
+<li><a href="https://github.com/golangci/golangci-lint/blob/master/pkg/golinters/goanalysis/linter.go">golangci-lint/linter.go at master · golangci/golangci-lint</a></li>
+<li><a href="https://disaev.me/p/writing-useful-go-analysis-linter/">Writing Useful go/analysis Linter · Denis Isaev Blog</a></li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<pre><code>	argsOffset := map[string]int{
+		&quot;go.zr.org/common/go/log+Debug&quot;: 3,
+		&quot;go.zr.org/common/go/log+Info&quot;: 3,
+		&quot;go.zr.org/common/go/log+Log&quot;: 3,
+		&quot;go.zr.org/common/go/log+InfoSampled&quot;: 4,
+		&quot;go.zr.org/common/go/log+NewFromWriter&quot;: 1,
+		&quot;go.zr.org/common/go/log+WithDetails&quot;: 1,
+		&quot;go.zr.org/common/go/log+NewBuffer&quot;: 0,
+		&quot;go.zr.org/common/go/errors+Wrap&quot;: 2,
+		&quot;go.zr.org/common/go/errors/details+NewPairs&quot;: 0,
+	}
+</code></pre>
+<ul>
+<li>details.pairs torture</li>
+</ul>
+<pre><code>        In the latest golangci-lint config, I see this:
+
+         # The custom section can be used to define linter plugins to be loaded at runtime. See README doc
+          #  for more info.
+          custom:
+            # Each custom linter should have a unique name.
+             example:
+              # The path to the plugin *.so. Can be absolute or local. Required for each custom linter
+              path: /path/to/example.so
+              # The description of the linter. Optional, just for documentation purposes.
+              description: This is an example usage of a plugin linter.
+              # Intended to point to the repo location of the linter. Optional, just for documentation purposes.
+              original-url: github.com/golangci/example-linter
+</code></pre>
+</div>
+</div>
+</div>
+<div class="container">
+<hr>
+<footer id="footer">
+<p class="pull-right"><a href="#top">Back to top</a></p>
+<ul>
+<li><a href="/notes/tags/project">project</a></li>
+<li><a href="/notes/tags/zr">zr</a></li>
+<li><a href="/notes/tags/public">public</a></li>
+<li><a href="/notes/tags">all tags</a></li>
+</ul>
+</footer>
+</div>
+  </body>
+</html>
